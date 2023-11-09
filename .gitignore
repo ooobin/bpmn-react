@@ -1,4 +1,20 @@
+## Git 忽略列表
 
-node_modules
+## Node.js
+# Dependency directories
+node_modules/
+
+# npm
 package-lock.json
-.gitattributes
+
+
+## Java
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
