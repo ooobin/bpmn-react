@@ -9,6 +9,7 @@ import CSS from './demo/demo06-css';
 import Echarts from './demo/demo08-echarts';
 import Parent from './demo/props/parent';
 import Home from './demo/demo09-home';
+import Test from './demo/demo-a-test';
 
 class App extends React.Component {
   render() {
@@ -34,6 +35,7 @@ class App extends React.Component {
               <Route path="/css" exact element={<CSS />} />
               <Route path="/echarts" exact element={<Echarts />} />
               <Route path="/props" exact element={<Parent />} />
+              <Route path="/test" exact element={<Test />} />
             </Routes>
           </>
         </BrowserRouter>
