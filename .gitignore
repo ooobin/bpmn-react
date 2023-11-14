@@ -1,20 +1,16 @@
 ## Git 忽略列表
 
 ## Node.js
-# Dependency directories
 node_modules/
-
-# npm
 package-lock.json
 
-
 ## Java
-# Compiled class file
+.idea/
+target/
 *.class
-
-# Log file
 *.log
-
-# Package Files #
 *.jar
 *.war
+
+## Mac 自动创建
+.DS_Store
