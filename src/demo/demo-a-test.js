@@ -1,7 +1,7 @@
 import React from 'react';
 
 function DemoTest() {
-  const showModal = true;
+  const showModal = false;
   return <div>{showModal && 'hello'}</div>;
 }
 
