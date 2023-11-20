@@ -1,8 +1,14 @@
-export default function DemoTest() {
-  const list = [
-    {name: 'a', age: 1},
-    {name: 'a', age: 2},
-    {name: 'a', age: 3},
-  ];
-  console.log(list.find(item => item.age === 2));
-}
+foo(
+  "demo",
+  {
+      title: "Demo",
+      width: 100
+  },
+  function () {
+      object.firstCall({
+          a: 'a',
+          b: 'b'
+      })
+          .secondCall();
+  }
+);

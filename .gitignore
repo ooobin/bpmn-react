@@ -1,8 +1,7 @@
-## Git 忽略列表
-
 ## Node.js
 node_modules/
 package-lock.json
+.eslintrc.js
 
 ## Java
 .idea/
@@ -12,5 +11,5 @@ target/
 *.jar
 *.war
 
-## Mac 自动创建
+## others
 .DS_Store
