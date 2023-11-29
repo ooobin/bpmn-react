@@ -10,6 +10,7 @@ import Echarts from './demo/demo08-echarts';
 import Parent from './demo/props/parent';
 import Home from './demo/demo09-home';
 import Test from './demo/demo-a-test';
+import Bpmn from './demo/bpmn/bpmn';
 
 class App extends React.Component {
   render() {
@@ -28,7 +29,7 @@ class App extends React.Component {
           <>
             <Routes>
               <Route path="/" exact element={<Home />} />
-              <Route path="/my-app" exact element={<Hello />} />
+              <Route path="/hello" exact element={<Hello />} />
               <Route path="/select" exact element={<SelectDemo />} />
               <Route path="/table" exact element={<TableDemo />} />
               <Route path="/modal" exact element={<ModalDemo />} />
@@ -36,6 +37,7 @@ class App extends React.Component {
               <Route path="/echarts" exact element={<Echarts />} />
               <Route path="/props" exact element={<Parent />} />
               <Route path="/test" exact element={<Test />} />
+              <Route path="/bpmn" exact element={<Bpmn />} />
             </Routes>
           </>
         </BrowserRouter>

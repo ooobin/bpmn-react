@@ -5,11 +5,13 @@ function Hello() {
   return <h2>Hello World!</h2>;
 }
 
-export default function MyApp() {
-  return (
-    <div id="hello">
-      <h1>welcome to</h1>
-      <Hello/>
-    </div>
-  );
+function MyApp() {
+    return (
+      <div id="hello">
+          <h1>welcome to</h1>
+          <Hello/>
+      </div>
+    );
 }
+
+export default MyApp;
