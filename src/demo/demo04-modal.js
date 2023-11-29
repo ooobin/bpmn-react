@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Modal } from 'antd';
+import React from "react";
+import { Button, Modal } from "antd";
 
 class ModalDemo extends React.Component {
   constructor(props) {

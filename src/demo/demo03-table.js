@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, Space, Table } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import React from "react";
+import { Button, Space, Table } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 class TableDemo extends React.Component {
   constructor(props) {
@@ -8,8 +8,8 @@ class TableDemo extends React.Component {
     this.state = {
       currentPage: 1,
       dataSource: [
-        { guid: '1', name: '张三' },
-        { guid: '2', name: '李四' },
+        { guid: "1", name: "张三" },
+        { guid: "2", name: "李四" },
       ],
     };
   }
@@ -19,7 +19,7 @@ class TableDemo extends React.Component {
     // 使用对象解构获取 name 和 value 属性
     const { type, checked, value, name } = e.target;
     // 根据类型获取值
-    const newValue = type === 'checkbox' ? checked : value;
+    const newValue = type === "checkbox" ? checked : value;
     // 根据 name 设置对应 state 值
     this.setState({
       [name]: newValue,
@@ -38,19 +38,19 @@ class TableDemo extends React.Component {
   render() {
     const columns = [
       {
-        title: '序号',
-        align: 'center',
-        width: '8%',
+        title: "序号",
+        align: "center",
+        width: "8%",
         render: (text, record, index) => index + 1,
       },
       {
-        title: '姓名',
-        align: 'center',
-        dataIndex: 'name',
+        title: "姓名",
+        align: "center",
+        dataIndex: "name",
       },
       {
-        title: '操作',
-        align: 'center',
+        title: "操作",
+        align: "center",
         render: () => {
           return (
             <Space size="middle">
@@ -76,7 +76,7 @@ class TableDemo extends React.Component {
           size="small"
           rowKey={(record) => record.guid}
           rowSelection={{
-            type: 'checkbox',
+            type: "checkbox",
             selectedRowKeys: this.state.selectedRowKeys,
             onChange: (selectedRowKeys, selectedRows) => {
               this.setState({ selectedRowKeys, selectedRows }, () => {

@@ -12,64 +12,64 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 // 右边属性面板
 import "bpmn-js-properties-panel/dist/assets/properties-panel.css";
 import {
-  BpmnPropertiesPanelModule,
-  BpmnPropertiesProviderModule,
-  CamundaPlatformPropertiesProviderModule,
+    BpmnPropertiesPanelModule,
+    BpmnPropertiesProviderModule,
+    CamundaPlatformPropertiesProviderModule,
 } from "bpmn-js-properties-panel";
 
 // use Camunda BPMN namespace
 import camundaModdleDescriptors from "camunda-bpmn-moddle/resources/camunda";
 
 class Bpmn extends Component {
-  constructor(props) {
-    super(props);
-    this.bpmnModeler = null;
-  }
-
-  componentDidMount() {
-    // 初始化 bpmnModeler
-    this.initModeler();
-  }
-
-  initModeler = () => {
-    this.bpmnModeler = new BpmnModeler({
-      container: "#canvas",
-      height: "100vh",
-      propertiesPanel: {
-        parent: "#properties",
-      },
-      additionalModules: [
-        BpmnPropertiesPanelModule,
-        BpmnPropertiesProviderModule,
-        CamundaPlatformPropertiesProviderModule,
-      ],
-      moddleExtensions: {
-        camunda: camundaModdleDescriptors,
-      },
-    });
-
-    // 加载 bpmn diagram
-    this.loadBpmnDiagram();
-  };
-
-  loadBpmnDiagram = async () => {
-    try {
-      this.bpmnModeler.importXML(diagram);
-    } catch (error) {
-      console.error(error);
+    constructor(props) {
+        super(props);
+        this.bpmnModeler = null;
     }
-  };
 
-  render() {
-    return (
-      <div id="App">
-        {/* Place where BPMN diagram will be rendered */}
-        <div id="canvas"></div>
-        {/* Additional panel for properties */}
-        <div id="properties"></div>
-      </div>
-    );
-  }
+    componentDidMount() {
+        // 初始化 bpmnModeler
+        this.initModeler();
+    }
+
+    initModeler = () => {
+        this.bpmnModeler = new BpmnModeler({
+            container: "#canvas",
+            height: "100vh",
+            propertiesPanel: {
+                parent: "#properties",
+            },
+            additionalModules: [
+                BpmnPropertiesPanelModule,
+                BpmnPropertiesProviderModule,
+                CamundaPlatformPropertiesProviderModule,
+            ],
+            moddleExtensions: {
+                camunda: camundaModdleDescriptors,
+            },
+        });
+
+        // 加载 bpmn diagram
+        this.loadBpmnDiagram();
+    };
+
+    loadBpmnDiagram = async () => {
+        try {
+            this.bpmnModeler.importXML(diagram);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    render() {
+        return (
+            <div id="App">
+                {/* Place where BPMN diagram will be rendered */}
+                <div id="canvas"></div>
+                {/* Additional panel for properties */}
+                <div id="properties"></div>
+            </div>
+        );
+    }
 }
 
 export default Bpmn;
