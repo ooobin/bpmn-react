@@ -15,6 +15,7 @@
     float: right;
 }
 
-.palatte-task {
-    color: red;
+.bpmn-icon-task {
+    /*display: none;*/
+    color: #cc0000 !important;
 }

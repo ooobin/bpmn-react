@@ -3,6 +3,8 @@ import BpmnModeler from "bpmn-js/lib/Modeler";
 import Diagram from "./diagram.bpmn";
 import "./app.css";
 import axios from "axios";
+import customPalette from './custom'; // 导入自定义工具栏模块
+import CustomModeler from "./custom-modeler"; // 完全自定义左侧工具栏
 
 // 左边工具栏及编辑元素
 import "bpmn-js/dist/assets/diagram-js.css";
@@ -44,6 +46,9 @@ class Bpmn extends Component {
                 BpmnPropertiesPanelModule,
                 BpmnPropertiesProviderModule,
                 CamundaPlatformPropertiesProviderModule,
+
+                // 自定义左侧工具栏
+                customPalette,
             ],
             moddleExtensions: {
                 camunda: camundaModdleDescriptors,

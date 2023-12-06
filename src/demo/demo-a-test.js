@@ -1,16 +1,14 @@
 import React from "react";
+import moment from "moment";
 
 class Test extends React.Component {
-    state = {
-        count: 0,
-    }
-
-    handleClick = () => {
-        this.setState({
-            count: this.state.count + 1,
-        }, () => {
-            console.log(this.state.count);
-        });
+    componentDidMount() {
+        const timeString = "2023-02-27 00:00:00"
+        const timeStamp = new Date(timeString).getTime();
+        console.log(timeStamp)
+        const days = Math.ceil(timeStamp / (1000 * 60 * 60 * 24));
+        const date = moment(new Date(days * 24 * 60 * 60 * 1000)).format("YYYY-MM-DD");
+        console.log(date);
     }
 
     render() {
