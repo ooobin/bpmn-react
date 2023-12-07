@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import Diagram from "./diagram.bpmn";
-import "./app.css";
+import "./app.scss";
 import axios from "axios";
-import customPalette from './custom'; // 导入自定义工具栏模块
+import customPalette from "./custom"; // 导入自定义工具栏模块
 import CustomModeler from "./custom-modeler"; // 完全自定义左侧工具栏
 
 // 左边工具栏及编辑元素
@@ -17,25 +17,34 @@ import "bpmn-js-properties-panel/dist/assets/properties-panel.css";
 import {
     BpmnPropertiesPanelModule,
     BpmnPropertiesProviderModule,
-    CamundaPlatformPropertiesProviderModule,
-} from "bpmn-js-properties-panel"; // use Camunda BPMN namespace
-import camundaModdleDescriptors from "camunda-bpmn-moddle/resources/camunda";
+} from "bpmn-js-properties-panel";
+
+// 汉化
+import customTranslate from "./customTranalate/customTranslate";
 
 class Bpmn extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isHandToolActive: false,
+        };
         this.bpmnModeler = null;
     }
 
     componentDidMount() {
         this.initModeler();
+        this.addBackgroundMovementListener();
     }
 
     /**
      * 初始化 bpmn modeler
      */
     initModeler = async () => {
+        // 汉化配置
+        const customTranslateModule = {
+            translate: ["value", customTranslate],
+        };
+
         this.bpmnModeler = new BpmnModeler({
             container: "#canvas",
             height: "100vh",
@@ -45,14 +54,13 @@ class Bpmn extends Component {
             additionalModules: [
                 BpmnPropertiesPanelModule,
                 BpmnPropertiesProviderModule,
-                CamundaPlatformPropertiesProviderModule,
 
                 // 自定义左侧工具栏
                 customPalette,
-            ],
-            moddleExtensions: {
-                camunda: camundaModdleDescriptors,
-            },
+
+                // 汉化
+                customTranslateModule,
+            ]
         });
 
         await this.getDiagramXML();
@@ -140,6 +148,46 @@ class Bpmn extends Component {
                 console.log(err);
             });
     };
+
+    /**
+     * 添加背景移动监听事件
+     */
+    addBackgroundMovementListener = () => {
+        const canvas = document.querySelector('#canvas');
+
+        // 以下代码块为触控板或滚轮移动时的背景图像移动
+        {
+            let x = 50,
+                y = 50; // 初始背景图片的位置
+            let speedFactor = 76; // 调整这个值来改变背景移动的速度
+
+            canvas.addEventListener("wheel", (e) => {
+                x -= (e.deltaX / canvas.offsetWidth) * speedFactor;
+                y -= (e.deltaY / canvas.offsetHeight) * speedFactor;
+                canvas.style.backgroundPosition = `${x}% ${y}%`;
+            });
+        }
+
+        // 以下代码块为鼠标拖动时的背景图像移动
+        {
+            let isMouseDown = false;
+            canvas.addEventListener('mousedown', (e) => {
+                isMouseDown = true;
+            });
+
+            canvas.addEventListener('mouseup', (e) => {
+                isMouseDown = false;
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (isMouseDown) {
+                    const x = e.clientX / canvas.offsetWidth * 100;
+                    const y = e.clientY / canvas.offsetHeight * 100;
+                    canvas.style.backgroundPosition = `${x}% ${y}%`;
+                }
+            });
+        }
+    }
 
     render() {
         return (
