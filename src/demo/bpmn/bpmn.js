@@ -14,10 +14,7 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 
 // 右边属性面板
 import "bpmn-js-properties-panel/dist/assets/properties-panel.css";
-import {
-    BpmnPropertiesPanelModule,
-    BpmnPropertiesProviderModule,
-} from "bpmn-js-properties-panel";
+import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from "bpmn-js-properties-panel";
 
 // 汉化
 import customTranslate from "./customTranalate/customTranslate";
@@ -60,7 +57,7 @@ class Bpmn extends Component {
 
                 // 汉化
                 customTranslateModule,
-            ]
+            ],
         });
 
         await this.getDiagramXML();
@@ -153,12 +150,13 @@ class Bpmn extends Component {
      * 添加背景移动监听事件
      */
     addBackgroundMovementListener = () => {
-        const canvas = document.querySelector('#canvas');
+        const canvas = document.querySelector("#canvas");
 
         // 以下代码块为触控板或滚轮移动时的背景图像移动
         {
+            // 初始背景图片的位置
             let x = 50,
-                y = 50; // 初始背景图片的位置
+                y = 50;
             let speedFactor = 76; // 调整这个值来改变背景移动的速度
 
             canvas.addEventListener("wheel", (e) => {
@@ -171,23 +169,31 @@ class Bpmn extends Component {
         // 以下代码块为鼠标拖动时的背景图像移动
         {
             let isMouseDown = false;
-            canvas.addEventListener('mousedown', (e) => {
+            canvas.addEventListener("mousedown", (e) => {
                 isMouseDown = true;
             });
 
-            canvas.addEventListener('mouseup', (e) => {
+            canvas.addEventListener("mouseup", (e) => {
                 isMouseDown = false;
             });
 
-            canvas.addEventListener('mousemove', (e) => {
+            canvas.addEventListener("mousemove", (e) => {
                 if (isMouseDown) {
-                    const x = e.clientX / canvas.offsetWidth * 100;
-                    const y = e.clientY / canvas.offsetHeight * 100;
+                    const x = (e.clientX / canvas.offsetWidth) * 100;
+                    const y = (e.clientY / canvas.offsetHeight) * 100;
                     canvas.style.backgroundPosition = `${x}% ${y}%`;
                 }
             });
         }
-    }
+
+        // 以下代码块为左侧工具栏抓手的点击事件
+        {
+            const eventBus = this.bpmnModeler.get("eventBus", true);
+            eventBus.on('tool:changed', function (e) {
+                console.log('抓手工具', e)
+            })
+        }
+    };
 
     render() {
         return (
