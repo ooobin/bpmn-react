@@ -53,7 +53,7 @@ export default {
     EndEvent: "结束事件",
     "Create Gateway": "创建网关",
     GateWay: "网关",
-    "Create Intermediate/Boundary Event": "创建中间/边界事件",
+    "Create Intermediate/Boundary Event": "创建中间事件",
     "Message Start Event": "消息开始事件",
     "Timer Start Event": "定时开始事件",
     "Conditional Start Event": "条件开始事件",

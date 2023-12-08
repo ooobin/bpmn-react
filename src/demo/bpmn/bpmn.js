@@ -12,10 +12,6 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 
-// 右边属性面板
-import "bpmn-js-properties-panel/dist/assets/properties-panel.css";
-import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from "bpmn-js-properties-panel";
-
 // 汉化
 import customTranslate from "./customTranalate/customTranslate";
 
@@ -43,13 +39,7 @@ class Bpmn extends Component {
         this.bpmnModeler = new BpmnModeler({
             container: "#canvas",
             height: "100vh",
-            propertiesPanel: {
-                parent: "#properties",
-            },
             additionalModules: [
-                BpmnPropertiesPanelModule,
-                BpmnPropertiesProviderModule,
-
                 // 自定义左侧工具栏
                 customPalette,
 
@@ -166,8 +156,11 @@ class Bpmn extends Component {
         // 以下代码块为鼠标拖动时的背景图像移动
         {
             let isMouseDown = false;
-            canvas.addEventListener("mousedown", () => {
-                isMouseDown = true;
+            canvas.addEventListener("mousedown", (e) => {
+                // 按下鼠标左键和滚轮时
+                if (e.button === 0 || e.button === 1) {
+                    isMouseDown = true;
+                }
             });
 
             canvas.addEventListener("mouseup", () => {
@@ -206,8 +199,6 @@ class Bpmn extends Component {
             <div id="App">
                 {/* Place where BPMN diagram will be rendered */}
                 <div id="canvas"></div>
-                {/* Additional panel for properties */}
-                <div id="properties"></div>
 
                 <button className="saveXML" onClick={this.handleSaveXML}>
                     保存为XML
