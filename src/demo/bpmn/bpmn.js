@@ -95,7 +95,7 @@ class Bpmn extends Component {
     };
 
     /**
-     * 导入 bpmn diagram 成功后的回调函数
+     * 导入 bpmn diagram 成功后的箭头函数
      */
     importSuccess = () => {
         this.addModelerListener();
@@ -166,11 +166,11 @@ class Bpmn extends Component {
         // 以下代码块为鼠标拖动时的背景图像移动
         {
             let isMouseDown = false;
-            canvas.addEventListener("mousedown", (e) => {
+            canvas.addEventListener("mousedown", () => {
                 isMouseDown = true;
             });
 
-            canvas.addEventListener("mouseup", (e) => {
+            canvas.addEventListener("mouseup", () => {
                 isMouseDown = false;
             });
 
