@@ -22,9 +22,7 @@ import customTranslate from "./customTranalate/customTranslate";
 class Bpmn extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            isHandToolActive: false,
-        };
+        this.state = {};
         this.bpmnModeler = null;
     }
 
@@ -126,7 +124,6 @@ class Bpmn extends Component {
                 function (e) {
                     // 点击画布时，不做任何处理
                     if (e.element.type === "bpmn:Process") return;
-                    console.log(e);
                 }.bind(this),
             );
         });
@@ -186,12 +183,21 @@ class Bpmn extends Component {
             });
         }
 
-        // 以下代码块为左侧工具栏抓手的点击事件
+        // 以下代码块为 Palette 抓手工具移动时的背景图像移动
         {
-            const eventBus = this.bpmnModeler.get("eventBus", true);
-            eventBus.on('tool:changed', function (e) {
-                console.log('抓手工具', e)
-            })
+            let lastMousePosition = { x: 0, y: 0 };
+
+            // 监听鼠标移动事件，更新鼠标位置
+            canvas.addEventListener("mousemove", function (e) {
+                lastMousePosition.x = e.clientX;
+                lastMousePosition.y = e.clientY;
+            });
+
+            this.bpmnModeler.on("hand.move.move", function () {
+                const x = (lastMousePosition.x / canvas.offsetWidth) * 100;
+                const y = (lastMousePosition.y / canvas.offsetHeight) * 100;
+                canvas.style.backgroundPosition = `${x}% ${y}%`;
+            });
         }
     };
 
