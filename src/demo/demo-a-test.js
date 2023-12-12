@@ -9,6 +9,7 @@ class Test extends React.Component {
         const days = Math.ceil(timeStamp / (1000 * 60 * 60 * 24));
         const date = moment(new Date(days * 24 * 60 * 60 * 1000)).format("YYYY-MM-DD");
         console.log(date);
+        log("hello world")
     }
 
     render() {
