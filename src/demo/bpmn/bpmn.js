@@ -3,8 +3,6 @@ import BpmnModeler from "bpmn-js/lib/Modeler";
 import Diagram from "./diagram.bpmn";
 import "./app.scss";
 import axios from "axios";
-import customPalette from "./custom"; // 导入自定义工具栏模块
-import CustomModeler from "./custom-modeler"; // 完全自定义左侧工具栏
 
 // 左边工具栏及编辑元素
 import "bpmn-js/dist/assets/diagram-js.css";
@@ -13,7 +11,7 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 
 // 汉化
-import customTranslate from "./customTranalate/customTranslate";
+import customTranslation from "./translation/custom-translation";
 
 class Bpmn extends Component {
     constructor(props) {
@@ -33,16 +31,13 @@ class Bpmn extends Component {
     initModeler = async () => {
         // 汉化配置
         const customTranslateModule = {
-            translate: ["value", customTranslate],
+            translate: ["value", customTranslation],
         };
 
         this.bpmnModeler = new BpmnModeler({
             container: "#canvas",
             height: "100vh",
             additionalModules: [
-                // 自定义左侧工具栏
-                customPalette,
-
                 // 汉化
                 customTranslateModule,
             ],

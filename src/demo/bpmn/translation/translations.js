@@ -1,6 +1,3 @@
-/**
- * 汉化
- */
 export default {
     "Activate the global connect tool": "激活全局连接工具",
     "Append {type}": "追加 {type}",
