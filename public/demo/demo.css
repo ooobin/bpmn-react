@@ -1,0 +1,67 @@
+/* 定义变量 */
+:root {
+    --primary-color: #3498db;
+}
+
+#demo {
+    font-size: 1.2rem;
+}
+
+#demo > .common {
+    height: 100px;
+    background-color: var(--primary-color);
+
+    /* 单行文本居中 */
+    /* text-align: center; !* 水平居中 *! */
+    /* line-height: 100px; !* 垂直居中 *! */
+
+    /* 多行文本居中，使用flexbox */
+    /* display: flex; */
+    /* justify-content: center; !* 水平居中 *! */
+    /* align-items: center; !* 垂直居中 *! */
+
+    /* 光标 */
+    /* cursor: pointer; */
+
+    /* 不透明度 */
+    /* opacity: 30%; */
+
+    /* 显示为块级元素 */
+    /* display: block; */
+}
+
+#demo > .bgp {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    background-image: url(demo.jpeg);
+    background-size: cover;
+}
+
+#demo > .container {
+    display: flex;
+    height: 100px;
+}
+
+#demo > .container > .left-column {
+    width: 25%;
+    background-color: #3498db;
+}
+
+#demo > .container > .right-column {
+    width: 75%;
+    background-color: #138fff;
+
+    display: flex;
+    flex-direction: column; /* 垂直布局 */
+}
+
+#demo > .container > .right-column > .top-content {
+    height: 25%;
+    background-color: #e33a3a;
+}
+
+#demo > .container > .right-column > .bottom-content {
+    height: 75%;
+    background-color: #d58713;
+}
