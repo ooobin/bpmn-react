@@ -65,3 +65,8 @@
     height: 75%;
     background-color: #d58713;
 }
+
+#demo > .flex-container {
+    display: flex;
+    justify-content: space-between;
+}

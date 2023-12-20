@@ -1,22 +1,16 @@
 import React from "react";
-import moment from "moment";
 
 class Test extends React.Component {
     componentDidMount() {
-        const timeString = "2023-02-27 00:00:00"
-        const timeStamp = new Date(timeString).getTime();
-        console.log(timeStamp)
-        const days = Math.ceil(timeStamp / (1000 * 60 * 60 * 24));
-        const date = moment(new Date(days * 24 * 60 * 60 * 1000)).format("YYYY-MM-DD");
-        console.log(date);
-        log("hello world")
+        const arr = [1, 2, 3];
+        const newArr = arr.map(item => {
+             console.log(item);
+            return item + 1;
+        })
+        console.log(newArr)
     }
 
-    render() {
-        return (
-          <button onClick={this.handleClick}>click</button>
-        )
-    }
+    render() {}
 }
 
 export default Test;
