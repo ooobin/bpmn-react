@@ -1,15 +1,10 @@
-/* 定义变量 */
-:root {
-    --primary-color: #3498db;
-}
-
 #demo {
     font-size: 1.2rem;
 }
 
 #demo > .common {
     height: 100px;
-    background-color: var(--primary-color);
+    background-color: #3498db;
 
     /* 单行文本居中 */
     /* text-align: center; !* 水平居中 *! */
