@@ -1,29 +1,16 @@
 import React from "react";
-import demo09Home from "./demo09-home";
-import http from "../utils/http";
 
-class Test extends React.Component {
-    timer = null; // 定时器
+class Timer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.timer = null; // 定时器
+        this.state = {
+            expiration: 60 * 60 * 1000, // 超时时间
+        };
+    }
 
     componentDidMount() {
         this.activityEventListener();
-    }
-
-    /**
-     * 用户活动事件监听器
-     */
-    activityEventListener() {
-        const currentPageUrl = window.location.href;
-        if (!currentPageUrl.endsWith("/test")) {
-            // 设置定时器
-            this.timer = setTimeout(() => {
-                window.location.href = "/test";
-            }, 60 * 60 * 1000); // 60分钟
-
-            // 监听用户活动，如鼠标移动和键盘按键
-            window.addEventListener("mousemove", this.resetTimer);
-            window.addEventListener("keydown", this.resetTimer);
-        }
     }
 
     componentWillUnmount() {
@@ -38,6 +25,24 @@ class Test extends React.Component {
     }
 
     /**
+     * 用户活动事件监听器
+     */
+    activityEventListener() {
+        const currentPageUrl = window.location.href;
+        if (!currentPageUrl.endsWith("/test")) {
+            // 设置定时器
+            this.timer = setTimeout(() => {
+                // 这个定时器在60分钟后会触发，触发后会将页面的URL重定向到"/test"
+                window.location.href = "/test";
+            }, this.state.expiration);
+
+            // 监听用户活动，如鼠标移动和键盘按键
+            window.addEventListener("mousemove", this.resetTimer);
+            window.addEventListener("keydown", this.resetTimer);
+        }
+    }
+
+    /**
      * 重置定时器
      */
     resetTimer = () => {
@@ -49,16 +54,16 @@ class Test extends React.Component {
         // 重新设置定时器
         this.timer = setTimeout(() => {
             window.location.href = "/test";
-        }, 60 * 60 * 1000); // 60分钟
+        }, this.state.expiration);
     };
 
     render() {
         return (
-            <div id="admin-home">
-
+            <div>
+                <h1>定时器</h1>
             </div>
-        )
+        );
     }
 }
 
-export default Test;
+export default Timer;
