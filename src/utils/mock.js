@@ -1,8 +1,8 @@
 import Mock from "mockjs";
 
 // 使用mockjs模拟数据
-Mock.mock("http://localhost:3000/intelligentcloud/userinfo/adminLogin", "post", (req) => {
-    console.log(req);
+Mock.mock("http://localhost:3000/intelligentcloud/userinfo/adminLogin", "post", () => {
+    console.log("adminLogin");
     return {
         code: 1,
         message: "1001",
@@ -12,8 +12,8 @@ Mock.mock("http://localhost:3000/intelligentcloud/userinfo/adminLogin", "post", 
     };
 });
 
-Mock.mock("http://localhost:3000/intelligentcloud/product/listAllProduct", "post", (req) => {
-    console.log(req);
+Mock.mock("http://localhost:3000/intelligentcloud/product/listAllProduct", "post", () => {
+    console.log("listAllProduct");
     return {
         code: 1,
         message: "success",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { MailOutlined, AppstoreOutlined } from '@ant-design/icons';
 import { withRouter } from 'react-router-dom';
 
 class CustomMenu extends React.Component {
@@ -11,12 +11,15 @@ class CustomMenu extends React.Component {
             // 此处的 key 对应路由中的 path/home/:key
             this.getItem('Test', 'test', <MailOutlined/>, null),
             this.getItem('Common', 'common', <AppstoreOutlined/>, null),
-            this.getItem('CommonClass', 'common-class', <AppstoreOutlined/>, null),
-            this.getItem('TableDemo', 'table-demo', <AppstoreOutlined/>, null),
-            this.getItem('Timer', 'timer', <AppstoreOutlined/>, null),
-            this.getItem('Breadcrumb', 'breadcrumb-demo', <AppstoreOutlined/>, null),
-            this.getItem('Props', 'props', <AppstoreOutlined/>, null),
-            this.getItem('函数组件', 'func', <SettingOutlined/>, [
+            this.getItem('CommonClass', 'common-class', null, null),
+            this.getItem('TableDemo', 'table-demo', null, null),
+            this.getItem('Timer', 'timer', null, null),
+            this.getItem('Breadcrumb', 'breadcrumb-demo', null, null),
+            this.getItem('Echarts', 'echarts', null, [
+                this.getItem('Bar', 'bar-echarts', null, null),
+            ]),
+            this.getItem('Props', 'props', null, null),
+            this.getItem('函数组件', 'func', null, [
                 this.getItem('My-App', 'my-app', null, null),
                 this.getItem('My-Game', 'my-game', null, null),
             ]),

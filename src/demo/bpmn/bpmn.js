@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import Diagram from "./diagram.bpmn";
-import "./app.scss";
+import "./bmpn.scss";
 import axios from "axios";
 
 // 左边工具栏及编辑元素
@@ -10,8 +10,16 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 
+// 右边属性面板
+import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
+import propertiesPanelModule from 'bpmn-js-properties-panel'
+import propertiesProviderModule from './lib/provider/camunda'
+import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
+
 // 汉化
 import customTranslation from "./translation/custom-translation";
+
+import { Button } from "antd";
 
 class Bpmn extends Component {
     constructor(props) {
@@ -21,8 +29,9 @@ class Bpmn extends Component {
     }
 
     componentDidMount() {
-        this.initModeler();
-        this.addBackgroundMovementListener();
+        this.initModeler().then(() => {
+            this.addBackgroundMovementListener();
+        });
     }
 
     /**
@@ -37,15 +46,25 @@ class Bpmn extends Component {
         this.bpmnModeler = new BpmnModeler({
             container: "#canvas",
             height: "100vh",
+            propertiesPanel: {
+                parent: "#properties",
+            },
             additionalModules: [
+                // 属性面板
+                propertiesPanelModule,
+                propertiesProviderModule,
                 // 汉化
                 customTranslateModule,
             ],
+            moddleExtensions: {
+                //如果要在属性面板中维护camunda扩展：XXX属性，则需要此
+                camunda: camundaModdleDescriptor
+            }
         });
 
         await this.getDiagramXML();
         this.loadBpmnDiagram();
-    };
+    }
 
     /**
      * 获取 bpmn diagram
@@ -54,14 +73,12 @@ class Bpmn extends Component {
     getDiagramXML = async () => {
         const res = await axios.get("https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/bpmnMock.bpmn");
 
-        // 一旦setState操作完成，resolve就会被调用，Promise 就会解决
         return new Promise((resolve) => {
-            this.setState(
-                {
-                    diagramXML: res.data,
-                },
-                resolve,
-            );
+            this.setState({
+                diagramXML: res.data,
+            }, () => {
+                resolve("success");
+            });
         });
     };
 
@@ -93,7 +110,8 @@ class Bpmn extends Component {
     addModelerListener = () => {
         const events = ["shape.added", "shape.removed"];
         events.forEach((event) => {
-            this.bpmnModeler.on(event, function (e) {});
+            this.bpmnModeler.on(event, function (e) {
+            });
         });
     };
 
@@ -104,12 +122,7 @@ class Bpmn extends Component {
         const eventTypes = ["element.click", "element.changed"];
         const eventBus = this.bpmnModeler.get("eventBus", true);
         eventTypes.forEach((eventType) => {
-            eventBus.on(
-                eventType,
-                function (e) {
-                    // 点击画布时，不做任何处理
-                    if (e.element.type === "bpmn:Process") return;
-                }.bind(this),
+            eventBus.on(eventType, function () {}.bind(this),
             );
         });
     };
@@ -192,12 +205,14 @@ class Bpmn extends Component {
     render() {
         return (
             <div id="App">
-                {/* Place where BPMN diagram will be rendered */}
-                <div id="canvas"></div>
-
-                <button className="saveXML" onClick={this.handleSaveXML}>
-                    保存为XML
-                </button>
+                <div id="canvas">
+                    <div class="canvas-toolbox">
+                        <Button onClick={this.handleSaveXML}>
+                            保存
+                        </Button>
+                    </div>
+                </div>
+                <div id="properties"></div>
             </div>
         );
     }

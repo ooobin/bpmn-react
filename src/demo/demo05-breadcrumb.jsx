@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import Breadcrumb from "antd/lib/breadcrumb";
+import { Link } from "react-router-dom";
 
 class BreadcrumbDemo extends React.Component {
     constructor(props) {
@@ -17,7 +18,8 @@ class BreadcrumbDemo extends React.Component {
                 <Breadcrumb>
                     <Breadcrumb.Item>Home</Breadcrumb.Item>
                     <Breadcrumb.Item>
-                        <a href="./common">common</a>
+                        {/* 使用 Link 组件而不是 <a> 标签，因为跳转不会刷新页面，So Fast */}
+                        <Link to="/home/common">common</Link>
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>breadcrumb</Breadcrumb.Item>
                 </Breadcrumb>

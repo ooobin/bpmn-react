@@ -12,6 +12,7 @@ import CommonClass from "../demo/demo02-common-class";
 import TableDemo from "../demo/demo03-table";
 import Timer from "../demo/demo04-timer";
 import BreadcrumbDemo from "../demo/demo05-breadcrumb";
+import BarEcharts from "../demo/demo08-echarts";
 import Props from "../demo/props/parent";
 
 // 函数组件
@@ -53,6 +54,7 @@ class Structure extends React.Component {
                                 <Route path="/home/table-demo" exact component={TableDemo} />
                                 <Route path="/home/timer" exact component={Timer} />
                                 <Route path="/home/breadcrumb-demo" exact component={BreadcrumbDemo} />
+                                <Route path="/home/bar-echarts" exact component={BarEcharts} />
                                 <Route path="/home/props" exact component={Props} />
 
                                 {/* 函数组件 */}

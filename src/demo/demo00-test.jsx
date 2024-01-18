@@ -1,28 +1,25 @@
 import React from 'react';
 import { connect } from "react-redux";
-import Breadcrumb from "antd/lib/breadcrumb";
 
 class CommonClass extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            yourStateProperty: this.props.yourStateProperty,
+            yourStateProperty: props.yourStateProperty,
         };
     }
 
-    handleBreadcrumb = () => {
-    };
 
     render() {
+        const workContent = '票号：';
+        const ticketNoPattern = /.*I.*/;
+        let title = '匹配';
+        if (!ticketNoPattern.test(workContent)) {
+            title = '不匹配'
+        }
         return (
             <div id="test">
-                <Breadcrumb>
-                    <Breadcrumb.Item>Home</Breadcrumb.Item>
-                    <Breadcrumb.Item>
-                        <a href="">Application Center</a>
-                    </Breadcrumb.Item>
-                </Breadcrumb>
-                <h1>Test</h1>
+                <h1>{title}</h1>
             </div>
         );
     }
