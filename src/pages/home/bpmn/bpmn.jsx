@@ -122,7 +122,7 @@ class Bpmn extends Component {
         const eventTypes = ["element.click", "element.changed"];
         const eventBus = this.bpmnModeler.get("eventBus", true);
         eventTypes.forEach((eventType) => {
-            eventBus.on(eventType, function () {}.bind(this),
+            eventBus.on(eventType, function () {},
             );
         });
     };

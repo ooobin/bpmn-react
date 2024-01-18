@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 class CustomMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.history = props.history;
         this.items = [
             // 此处的 key 对应路由中的 path/home/:key
             this.getItem('Test', 'test', <MailOutlined/>, null),
@@ -19,10 +18,6 @@ class CustomMenu extends React.Component {
                 this.getItem('Bar', 'bar-echarts', null, null),
             ]),
             this.getItem('Props', 'props', null, null),
-            this.getItem('函数组件', 'func', null, [
-                this.getItem('My-App', 'my-app', null, null),
-                this.getItem('My-Game', 'my-game', null, null),
-            ]),
         ];
 
         // 若选择子菜单，则记录所在父菜单的 key，刷新页面时默认展开该父菜单
@@ -54,7 +49,7 @@ class CustomMenu extends React.Component {
      */
     handleMenuClick = (e) => {
         // history 对象是通过路由组件传递的，所以组件需要 Route 或者 withRouter 包裹
-        this.history.push("/home/" + e.key);
+        this.props.history.push("/home/" + e.key);
 
         // 保存子菜单项所在父菜单的 key
         const openKeys = e.keyPath[1];

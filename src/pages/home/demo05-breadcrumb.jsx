@@ -1,16 +1,8 @@
 import React from 'react';
-import { connect } from "react-redux";
 import Breadcrumb from "antd/lib/breadcrumb";
 import { Link } from "react-router-dom";
 
 class BreadcrumbDemo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            yourStateProperty: props.yourStateProperty,
-        };
-    }
-
     render() {
         return (
             <div id="breadcrumb">
@@ -28,9 +20,4 @@ class BreadcrumbDemo extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    yourStateProperty: state.yourStateProperty,
-    // 您可以在这里添加更多需要的状态属性
-});
-
-export default connect(mapStateToProps)(BreadcrumbDemo);
+export default BreadcrumbDemo;

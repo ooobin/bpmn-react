@@ -1,12 +1,7 @@
 // store.js
-import { createStore } from "redux";
+import { createStore } from 'redux';
+import rootReducer from './reducers';
 
-const initialState = {
-    // 初始状态
-    yourStateProperty: "initial value",
-    // 可以在这里添加更多的初始状态属性
-};
-
-const store = createStore((state = initialState) => state);
+const store = createStore(rootReducer);
 
 export default store;
