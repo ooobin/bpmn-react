@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Structure from "../page-structure/structure";
-import Bpmn from "../demo/bpmn/bpmn";
+import Bpmn from "../pages/home/bpmn/bpmn";
 import Result_404 from "../pages/result/result-404";
 
 const Router = () => {

@@ -6,18 +6,18 @@ import { Route, Switch } from "react-router-dom";
 import Menu from "../components/menu/menu";
 
 // 路由组件
-import Test from "../demo/demo00-test";
-import Common from "../demo/demo01-common";
-import CommonClass from "../demo/demo02-common-class";
-import TableDemo from "../demo/demo03-table";
-import Timer from "../demo/demo04-timer";
-import BreadcrumbDemo from "../demo/demo05-breadcrumb";
-import BarEcharts from "../demo/demo08-echarts";
-import Props from "../demo/props/parent";
+import Test from "../pages/home/demo00-test";
+import Common from "../pages/home/demo01-common";
+import CommonClass from "../pages/home/demo02-common-class";
+import TableDemo from "../pages/home/demo03-table";
+import Timer from "../pages/home/demo04-timer";
+import BreadcrumbDemo from "../pages/home/demo05-breadcrumb";
+import BarEcharts from "../pages/home/demo08-echarts";
+import Props from "../pages/home/props/parent";
 
 // 函数组件
-import MyApp from "../demo/function/demo01-app";
-import MyGame from "../demo/function/demo02-game";
+import MyApp from "../pages/home/function/demo01-app";
+import MyGame from "../pages/home/function/demo02-game";
 
 class Structure extends React.Component {
     constructor(props) {
