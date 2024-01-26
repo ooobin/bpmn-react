@@ -21,5 +21,17 @@
 
     #properties {
         width: 25%;
+
+        #camunda-id {
+            width: 90%;
+        }
+
+        #camunda-name {
+            width: 97%;
+        }
+
+        #camunda-versionTag {
+            width: 90%;
+        }
     }
 }

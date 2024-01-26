@@ -14,6 +14,7 @@ class CustomMenu extends React.Component {
             this.getItem('TableDemo', 'table-demo', null, null),
             this.getItem('Timer', 'timer', null, null),
             this.getItem('Breadcrumb', 'breadcrumb-demo', null, null),
+            this.getItem('Foreach', 'foreach', null, null),
             this.getItem('Echarts', 'echarts', null, [
                 this.getItem('Bar', 'bar-echarts', null, null),
             ]),

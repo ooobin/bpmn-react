@@ -12,8 +12,10 @@ import CommonClass from "./home/demo02-common-class";
 import TableDemo from "./home/demo03-table";
 import Timer from "./home/demo04-timer";
 import BreadcrumbDemo from "./home/demo05-breadcrumb";
+import Foreach from "./home/demo06-foreach";
 import BarEcharts from "./home/demo08-echarts";
 import Props from "./home/props/parent";
+import Result_404 from "./result/result-404";
 
 class PageStructure extends React.Component {
     constructor(props) {
@@ -50,8 +52,10 @@ class PageStructure extends React.Component {
                                 <Route path="/home/table-demo" exact component={TableDemo} />
                                 <Route path="/home/timer" exact component={Timer} />
                                 <Route path="/home/breadcrumb-demo" exact component={BreadcrumbDemo} />
+                                <Route path="/home/foreach" exact component={Foreach} />
                                 <Route path="/home/bar-echarts" exact component={BarEcharts} />
                                 <Route path="/home/props" exact component={Props} />
+                                <Route path="*" component={Result_404} />
                             </Switch>
                         </Content>
                     </Layout>
