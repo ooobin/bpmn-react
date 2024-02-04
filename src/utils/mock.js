@@ -1,35 +1,36 @@
 import Mock from "mockjs";
+import qs from "qs";
 
-// 使用mockjs模拟数据
-Mock.mock("http://localhost:3000/intelligentcloud/userinfo/adminLogin", "post", () => {
-    console.log("adminLogin");
+/**
+ * 通过 Mock.mock() 方法模拟请求
+ */
+Mock.mock("http://localhost:3100/i-demo/api/test", "post", () => {
+    console.log("test");
     return {
         code: 1,
-        message: "1001",
+        message: "success",
         data: {
+            code: 1,
+            message: 'success',
             data: "success",
         },
     };
 });
 
-Mock.mock("http://localhost:3000/intelligentcloud/product/listAllProduct", "post", () => {
-    console.log("listAllProduct");
-    return {
-        code: 1,
-        message: "success",
-        data: [
-            {
-                id: "1",
-                productNo: "1",
-                productName: "产品测试",
-                description: "产品测试",
-            },
-            {
-                id: "2",
-                productNo: "2",
-                productName: "产品测试2",
-                description: "产品测试2",
-            },
-        ],
-    };
+Mock.mock('http://localhost:3100/i-demo/api/test', 'post', (req) => {
+    const params = qs.parse(req.body);
+
+    if (params.productId === '1') {
+        return {
+            code: 1,
+            message: 'success',
+            data: [],
+        };
+    } else {
+        return {
+            code: 1,
+            message: 'success',
+            data: [],
+        };
+    }
 });

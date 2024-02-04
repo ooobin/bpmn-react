@@ -11,26 +11,19 @@
     /* line-height: 100px; !* 垂直居中 *! */
 
     /* 多行文本居中，使用flexbox */
-    /* display: flex; */
-    /* justify-content: center; !* 水平居中 *! */
-    /* align-items: center; !* 垂直居中 *! */
-
-    /* 光标 */
-    /* cursor: pointer; */
-
-    /* 不透明度 */
-    /* opacity: 30%; */
-
-    /* 显示为块级元素 */
-    /* display: block; */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
 }
 
 #demo > .bgp {
-    width: 100px;
+    width: 150px;
     height: 100px;
     margin: 0 auto;
+
     background-image: url(demo.jpeg);
-    background-size: cover;
+    /* background-size: cover; !* 保持图片比例 *! */
+    background-size: 100% 100%; /* 拉伸图片 */
 }
 
 #demo > .container {
