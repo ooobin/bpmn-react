@@ -19,6 +19,7 @@ class CustomMenu extends React.Component {
                 this.getItem('Bar', 'bar-echarts', null, null),
             ]),
             this.getItem('Props', 'props', null, null),
+            this.getItem('WS', 'ws', null, null),
         ];
 
         // 若选择子菜单，则记录所在父菜单的 key，刷新页面时默认展开该父菜单

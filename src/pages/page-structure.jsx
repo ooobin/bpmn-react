@@ -16,6 +16,7 @@ import Foreach from "./home/demo06-foreach";
 import BarEcharts from "./home/demo08-echarts";
 import Props from "./home/props/parent";
 import Result_404 from "./result/result-404";
+import WS from "./home/demo07-websocket";
 
 class PageStructure extends React.Component {
     constructor(props) {
@@ -55,6 +56,7 @@ class PageStructure extends React.Component {
                                 <Route path="/home/foreach" exact component={Foreach} />
                                 <Route path="/home/bar-echarts" exact component={BarEcharts} />
                                 <Route path="/home/props" exact component={Props} />
+                                <Route path="/home/ws" exact component={WS} />
                                 <Route path="*" component={Result_404} />
                             </Switch>
                         </Content>
