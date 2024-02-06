@@ -1,3 +1,10 @@
+### Example template
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
 ### react template
 .DS_*
 *.log
