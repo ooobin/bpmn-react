@@ -3,28 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "5.2.6",
-    "@craco/craco": "7.1.0",
+    "@ant-design/icons": "^5.2.6",
+    "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.7",
     "@mui/material": "^5.15.7",
-    "antd": "5.12.4",
-    "axios": "1.6.2",
-    "bpmn-js": "8.10.0",
-    "bpmn-js-properties-panel": "0.46.0",
-    "camunda-bpmn-moddle": "7.0.1",
-    "diagram-js": "13.4.0",
-    "echarts": "5.4.3",
-    "inherits": "2.0.4",
-    "qs": "6.11.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-redux": "9.0.4",
-    "react-router-dom": "5.3.4",
-    "react-scripts": "5.0.1",
-    "redux": "5.0.1",
-    "sass": "1.69.5"
+    "antd": "^5.12.4",
+    "axios": "^1.6.2",
+    "bpmn-js": "^8.10.0",
+    "bpmn-js-properties-panel": "^0.46.0",
+    "camunda-bpmn-moddle": "^7.0.1",
+    "diagram-js": "^13.4.0",
+    "echarts": "^5.4.3",
+    "inherits": "^2.0.4",
+    "qs": "^6.11.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.0.4",
+    "react-router-dom": "^5.3.4",
+    "react-scripts": "^5.0.1",
+    "redux": "^5.0.1",
+    "sass": "^1.69.5"
   },
   "scripts": {
     "start": "PORT=3100 craco start",
@@ -49,6 +49,6 @@
     ]
   },
   "devDependencies": {
-    "mockjs": "1.1.0"
+    "mockjs": "^1.1.0"
   }
 }
