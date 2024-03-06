@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import "./bmpn.scss";
-import axios from "axios";
+import { Button } from "antd";
 import Diagram from "./diagram.bpmn";
 
 // BpmnModeler
 import BpmnModeler from "bpmn-js/lib/Modeler";
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import customTranslate from "./translation/custom-translate";
 
-// 左侧工具栏相关
+// 工具栏及图像相关
 import 'bpmn-js/dist/assets/bpmn-js.css';
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+import "bpmn-js-color-picker/colors/color-picker.css"
 
 // 右侧属性面板
 import {
@@ -23,25 +25,24 @@ import {
 import '@bpmn-io/properties-panel/assets/properties-panel.css';
 import ZeebeBpmnModdle from 'zeebe-bpmn-moddle/resources/zeebe.json'
 
-import { Button } from "antd";
-
 class Bpmn extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
     this.bpmnModeler = null;
+    this.state = {};
   }
 
   componentDidMount() {
-    this.initModeler().then(() => {
-      this.addBackgroundMovementListener();
-    });
+    this.initModeler();
+    this.handleBgDrag();
+    this.bpmnModeler.importXML(Diagram);
+    this.successfulImported();
   }
 
   /**
-   * 初始化 bpmn modeler
+   * Initialize bpmn modeler
    */
-  initModeler = async () => {
+  initModeler = () => {
     // Our custom translation module
     // We need to use the array syntax that is used by bpmn-js internally
     // 'value' tells bmpn-js to use the function instead of trying to instanciate it
@@ -56,54 +57,22 @@ class Bpmn extends Component {
         parent: "#properties",
       },
       additionalModules: [
+        BpmnColorPickerModule,
         customTranslateModule,
         BpmnPropertiesPanelModule,
         BpmnPropertiesProviderModule,
-        ZeebePropertiesProviderModule
+        ZeebePropertiesProviderModule,
       ],
       moddleExtensions: {
         zeebe: ZeebeBpmnModdle
       }
     });
-
-    await this.getDiagramXML();
-    this.loadBpmnDiagram();
   }
 
   /**
-   * 获取 bpmn diagram
-   * @returns {Promise<unknown>} 异步对象，具有三种状态（pending、fulfilled、rejected）
+   * Successful imported
    */
-  getDiagramXML = async () => {
-    const res = await axios.get("https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/bpmnMock.bpmn");
-
-    return new Promise((resolve) => {
-      this.setState({
-        diagramXML: res.data,
-      }, () => {
-        resolve("success");
-      });
-    });
-  };
-
-  /**
-   * 加载 bpmn diagram
-   */
-  loadBpmnDiagram = () => {
-    if (this.state.diagramXML === undefined) {
-      // 返回一个默认的 diagram
-      this.bpmnModeler.importXML(Diagram);
-    } else {
-      this.bpmnModeler.importXML(this.state.diagramXML);
-    }
-
-    this.importSuccess();
-  };
-
-  /**
-   * 导入 bpmn diagram 成功后的箭头函数
-   */
-  importSuccess = () => {
+  successfulImported = () => {
     this.addModelerListener();
     this.addEventBusListener();
   };
@@ -149,7 +118,7 @@ class Bpmn extends Component {
   /**
    * 添加背景移动监听事件
    */
-  addBackgroundMovementListener = () => {
+  handleBgDrag = () => {
     const canvas = document.querySelector("#canvas");
 
     // 以下代码块为触控板或滚轮移动时的背景图像移动
