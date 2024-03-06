@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import BpmnModeler from "bpmn-js/lib/Modeler";
-import Diagram from "./diagram.bpmn";
 import "./bmpn.scss";
 import axios from "axios";
+import Diagram from "./diagram.bpmn";
 
-// 左边工具栏及编辑元素
+// BpmnModeler
+import BpmnModeler from "bpmn-js/lib/Modeler";
+import customTranslate from "./translation/custom-translate";
+
+// 左边工具栏
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
@@ -15,9 +18,6 @@ import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 import propertiesPanelModule from 'bpmn-js-properties-panel'
 import propertiesProviderModule from './lib/provider/camunda'
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda'
-
-// 汉化
-import customTranslation from "./translation/custom-translation";
 
 import { Button } from "antd";
 
@@ -38,9 +38,11 @@ class Bpmn extends Component {
      * 初始化 bpmn modeler
      */
     initModeler = async () => {
-        // 汉化配置
+        // Our custom translation module
+        // We need to use the array syntax that is used by bpmn-js internally
+        // 'value' tells bmpn-js to use the function instead of trying to instanciate it
         const customTranslateModule = {
-            translate: ["value", customTranslation],
+            translate: ['value', customTranslate]
         };
 
         this.bpmnModeler = new BpmnModeler({
@@ -53,7 +55,6 @@ class Bpmn extends Component {
                 // 属性面板
                 propertiesPanelModule,
                 propertiesProviderModule,
-                // 汉化
                 customTranslateModule,
             ],
             moddleExtensions: {
