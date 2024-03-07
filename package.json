@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@bpmn-io/properties-panel": "^3.18.1",
     "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -14,6 +15,7 @@
     "bpmn-js": "^17.0.2",
     "bpmn-js-color-picker": "^0.7.0",
     "bpmn-js-properties-panel": "^5.13.0",
+    "camunda-bpmn-moddle": "^7.0.1",
     "diagram-js": "^13.4.0",
     "echarts": "^5.4.3",
     "inherits": "^2.0.4",

@@ -5,8 +5,8 @@ import Diagram from "./diagram.bpmn";
 
 // BpmnModeler
 import BpmnModeler from "bpmn-js/lib/Modeler";
-import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import customTranslate from "./translation/custom-translate";
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
 
 // 工具栏及图像相关
 import 'bpmn-js/dist/assets/bpmn-js.css';
@@ -14,22 +14,21 @@ import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
-import "bpmn-js-color-picker/colors/color-picker.css"
+import "bpmn-js-color-picker/colors/color-picker.css";
 
 // 右侧属性面板
 import {
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
-  ZeebePropertiesProviderModule
+  CamundaPlatformPropertiesProviderModule
 } from 'bpmn-js-properties-panel';
 import '@bpmn-io/properties-panel/assets/properties-panel.css';
-import ZeebeBpmnModdle from 'zeebe-bpmn-moddle/resources/zeebe.json'
+import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda.json'
 
 class Bpmn extends Component {
   constructor(props) {
     super(props);
     this.bpmnModeler = null;
-    this.state = {};
   }
 
   componentDidMount() {
@@ -61,10 +60,10 @@ class Bpmn extends Component {
         customTranslateModule,
         BpmnPropertiesPanelModule,
         BpmnPropertiesProviderModule,
-        ZeebePropertiesProviderModule,
+        CamundaPlatformPropertiesProviderModule
       ],
       moddleExtensions: {
-        zeebe: ZeebeBpmnModdle
+        camunda: CamundaBpmnModdle
       }
     });
   }
@@ -73,22 +72,33 @@ class Bpmn extends Component {
    * Successful imported
    */
   successfulImported = () => {
-    this.addModelerListener();
+    this.eventsListener();
   };
 
   /**
-   * 添加 modeler 监听事件
+   * eventsListener
    */
-  addModelerListener = () => {
-    const events = ["shape.added", "shape.removed"];
+  eventsListener = () => {
+    const events = ["element.click"];
     events.forEach((event) => {
       this.bpmnModeler.on(event, function (e) {
+        /// Print the extension properties
+        // const businessObject = e.element.businessObject;
+        // if (businessObject.extensionElements) {
+        //   businessObject.extensionElements.values.forEach((extensionElement) => {
+        //     if (extensionElement.$type === 'camunda:Properties') {
+        //       extensionElement.values.forEach((property) => {
+        //         console.log(`Property name: ${property.name}, value: ${property.value}`);
+        //       });
+        //     }
+        //   });
+        // }
       });
     });
   };
 
   /**
-   * 保存 bpmn diagram
+   * Save bpmn diagram
    */
   handleSaveXML = () => {
     this.bpmnModeler
@@ -102,7 +112,7 @@ class Bpmn extends Component {
   };
 
   /**
-   * 添加背景移动监听事件
+   * Handle background drag
    */
   handleBgDrag = () => {
     const canvas = document.querySelector("#canvas");
