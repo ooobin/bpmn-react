@@ -74,7 +74,6 @@ class Bpmn extends Component {
    */
   successfulImported = () => {
     this.addModelerListener();
-    this.addEventBusListener();
   };
 
   /**
@@ -85,19 +84,6 @@ class Bpmn extends Component {
     events.forEach((event) => {
       this.bpmnModeler.on(event, function (e) {
       });
-    });
-  };
-
-  /**
-   * 监听 eventBus 事件
-   */
-  addEventBusListener = () => {
-    const eventTypes = ["element.click", "element.changed"];
-    const eventBus = this.bpmnModeler.get("eventBus", true);
-    eventTypes.forEach((eventType) => {
-      eventBus.on(eventType, function () {
-        },
-      );
     });
   };
 
