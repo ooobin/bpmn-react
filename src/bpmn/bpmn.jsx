@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./bmpn.css";
-import { Button } from "antd";
-import Diagram from "./diagram.bpmn";
+import Diagram from "./model/diagram.bpmn";
 
 // BpmnModeler
 import BpmnModeler from "bpmn-js/lib/Modeler";
@@ -177,9 +176,9 @@ class Bpmn extends Component {
       <div id="App">
         <div id="canvas">
           <div class="canvas-toolbox">
-            <Button onClick={this.handleSaveXML}>
+            <button onClick={this.handleSaveXML}>
               保存
-            </Button>
+            </button>
           </div>
         </div>
         <div id="properties"></div>
