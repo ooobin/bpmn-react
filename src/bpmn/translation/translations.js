@@ -4,7 +4,7 @@
  * Checkout https://github.com/bpmn-io/bpmn-js-i18n for a list of available
  * translations and labels to translate.
  */
-export default {
+const translations = {
     "Activate create/remove space tool": "启动创建/删除空间工具",
     "Activate global connect tool": "启动全局连接工具",
     "Activate hand tool": "启动手动工具",
@@ -132,3 +132,5 @@ export default {
     "no shape type specified": "未指定形状类型",
     "out of bounds release": "越界释放"
 };
+
+export default translations;

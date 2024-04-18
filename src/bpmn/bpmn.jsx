@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./bmpn.scss";
+import "./bmpn.css";
 import { Button } from "antd";
 import Diagram from "./diagram.bpmn";
 
