@@ -3,13 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
     "@bpmn-io/properties-panel": "^3.18.1",
     "@craco/craco": "^7.1.0",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.7",
-    "@mui/material": "^5.15.7",
     "antd": "^5.12.4",
     "axios": "^1.6.2",
     "bpmn-js": "^17.0.2",
@@ -17,21 +12,14 @@
     "bpmn-js-properties-panel": "^5.13.0",
     "camunda-bpmn-moddle": "^7.0.1",
     "diagram-js": "^13.4.0",
-    "echarts": "^5.4.3",
-    "inherits": "^2.0.4",
-    "qs": "^6.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^9.0.4",
-    "react-router-dom": "^5.3.4",
     "react-scripts": "^5.0.1",
-    "redux": "^5.0.1",
-    "sass": "^1.69.5",
-    "zeebe-bpmn-moddle": "^1.1.0"
+    "sass": "^1.69.5"
   },
   "scripts": {
-    "start": "PORT=3100 craco start",
-    "build": "PORT=3000 react-scripts build"
+    "start": "PORT=15524 craco start",
+    "build": "PORT=15524 react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -50,8 +38,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "mockjs": "^1.1.0"
   }
 }
