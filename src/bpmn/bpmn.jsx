@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import "./bmpn.css";
-import Diagram from "./model/diagram.bpmn";
 
-// BpmnModeler
+// Bpmn modules
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import customTranslate from "./translation/custom-translate";
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 
-// 工具栏及图像相关
+// 左侧工具栏和画板图像
 import 'bpmn-js/dist/assets/bpmn-js.css';
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
@@ -33,8 +32,6 @@ class Bpmn extends Component {
   componentDidMount() {
     this.initModeler();
     this.handleBgDrag();
-    this.bpmnModeler.importXML(Diagram);
-    this.successfulImported();
   }
 
   /**
@@ -52,7 +49,7 @@ class Bpmn extends Component {
       container: "#canvas",
       height: "100vh",
       propertiesPanel: {
-        parent: "#properties",
+        parent: "#properties-panel",
       },
       additionalModules: [
         BpmnColorPickerModule,
@@ -65,50 +62,13 @@ class Bpmn extends Component {
         camunda: CamundaBpmnModdle
       }
     });
+
+    this.bpmnModeler.createDiagram();
+    this.bpmnModeler.get('canvas').zoom('fit-viewport');
+
+    /// Imported diagram
+    // this.bpmnModeler.importXML(Diagram);
   }
-
-  /**
-   * Successful imported
-   */
-  successfulImported = () => {
-    this.eventsListener();
-  };
-
-  /**
-   * eventsListener
-   */
-  eventsListener = () => {
-    const events = ["element.click"];
-    events.forEach((event) => {
-      this.bpmnModeler.on(event, function (e) {
-        /// Print the extension properties
-        // const businessObject = e.element.businessObject;
-        // if (businessObject.extensionElements) {
-        //   businessObject.extensionElements.values.forEach((extensionElement) => {
-        //     if (extensionElement.$type === 'camunda:Properties') {
-        //       extensionElement.values.forEach((property) => {
-        //         console.log(`Property name: ${property.name}, value: ${property.value}`);
-        //       });
-        //     }
-        //   });
-        // }
-      });
-    });
-  };
-
-  /**
-   * Save bpmn diagram
-   */
-  handleSaveXML = () => {
-    this.bpmnModeler
-      .saveXML({ format: true })
-      .then((xml) => {
-        console.log(xml);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   /**
    * Handle background drag
@@ -171,17 +131,34 @@ class Bpmn extends Component {
     }
   };
 
+  /**
+   * Save bpmn diagram
+   */
+  handleSaveXML = () => {
+    this.bpmnModeler
+      .saveXML({ format: true })
+      .then((xml) => {
+        console.log(xml);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <div id="App">
         <div id="canvas">
           <div class="canvas-toolbox">
-            <button onClick={this.handleSaveXML}>
+            <button
+              className="canvas-toolbox-button"
+              onClick={this.handleSaveXML}
+            >
               保存
             </button>
           </div>
         </div>
-        <div id="properties"></div>
+        <div id="properties-panel"></div>
       </div>
     );
   }
