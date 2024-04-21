@@ -1,39 +1,28 @@
 #App {
     display: flex;
+    position: relative;
 
     #canvas {
         width: 75%;
-        position: relative;
 
         /* 网格背景 */
         background-image: linear-gradient(90deg, hsla(0, 0%, 78.4%, .15) 10%, transparent 0), linear-gradient(hsla(0, 0%, 78.4%, .15) 10%, transparent 0);
         background-size: 10px 10px;
-
-        .canvas-toolbox {
-            background-color: whitesmoke;
-            position: absolute;
-            bottom: 1vh;
-            left: 1vw;
-
-            .canvas-toolbox-button {
-                background: transparent;
-            }
-        }
     }
 
     #properties-panel {
         width: 25%;
+    }
 
-        #camunda-id {
-            width: 90%;
-        }
+    #canvas-toolbox {
+        background-color: whitesmoke;
+        position: absolute;
+        bottom: 1vh;
+        left: 1vw;
 
-        #camunda-name {
-            width: 97%;
-        }
-
-        #camunda-versionTag {
-            width: 90%;
+        .canvas-toolbox-button {
+            background: transparent;
+            cursor: pointer;
         }
     }
 }

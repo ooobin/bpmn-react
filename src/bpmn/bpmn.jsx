@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import "./bmpn.css";
+import FileSaver from 'file-saver';
+import axios from 'axios';
 
 // Bpmn modules
 import BpmnModeler from "bpmn-js/lib/Modeler";
@@ -63,11 +65,10 @@ class Bpmn extends Component {
       }
     });
 
+    // Load diagram
     this.bpmnModeler.createDiagram();
+    // Fit diagram to viewport
     this.bpmnModeler.get('canvas').zoom('fit-viewport');
-
-    /// Imported diagram
-    // this.bpmnModeler.importXML(Diagram);
   }
 
   /**
@@ -132,33 +133,69 @@ class Bpmn extends Component {
   };
 
   /**
-   * Save bpmn diagram
+   * Save diagram as XML
    */
-  handleSaveXML = () => {
-    this.bpmnModeler
-      .saveXML({ format: true })
-      .then((xml) => {
-        console.log(xml);
-      })
-      .catch((err) => {
-        console.log(err);
+  saveDiagram = async () => {
+      const result = await this.bpmnModeler.saveXML({ format: true });
+      const { xml } = result
+
+      let blob = new Blob([xml], { type: 'text/xml' });
+      FileSaver.saveAs(blob, 'diagram.bpmn');
+  }
+
+  /**
+   * Save diagram as SVG
+   */
+  saveSVG = async () => {
+    const result = await this.bpmnModeler.saveSVG({ format: true });
+    const { svg } = result
+
+    let blob = new Blob([svg], { type: 'image/svg+xml' });
+    FileSaver.saveAs(blob, 'diagram.svg');
+  }
+
+  /**
+   * Submit diagram to Camunda
+   *
+   * @returns {Promise<void>}
+   */
+  submitDiagramToCamunda = async () => {
+    const result = await this.bpmnModeler.saveXML({ format: true });
+    const { xml } = result;
+
+    axios.post('http://localhost:8080/loanGrantService', {xml})
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch((error) => {
+        console.error('Error:', error);
       });
-  };
+  }
 
   render() {
     return (
       <div id="App">
-        <div id="canvas">
-          <div class="canvas-toolbox">
-            <button
-              className="canvas-toolbox-button"
-              onClick={this.handleSaveXML}
-            >
-              保存
-            </button>
-          </div>
-        </div>
+        <div id="canvas"></div>
         <div id="properties-panel"></div>
+        <div id="canvas-toolbox">
+          <button
+            className="canvas-toolbox-button"
+            onClick={this.saveDiagram}
+          >
+            Download as BPMN 2.0 file
+          </button>
+          <button
+            className="canvas-toolbox-button"
+            onClick={this.saveSVG}
+          >
+            Download as SVG image
+          </button>
+          <button
+            className="canvas-toolbox-button"
+            onClick={this.submitDiagramToCamunda}
+          >
+            Submit to Camunda
+          </button>
+        </div>
       </div>
     );
   }
