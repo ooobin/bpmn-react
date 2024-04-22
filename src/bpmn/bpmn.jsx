@@ -39,7 +39,7 @@ class Bpmn extends Component {
   /**
    * Initialize bpmn modeler
    */
-  initModeler = () => {
+  initModeler = async () => {
     // Our custom translation module
     // We need to use the array syntax that is used by bpmn-js internally
     // 'value' tells bmpn-js to use the function instead of trying to instanciate it
@@ -66,7 +66,7 @@ class Bpmn extends Component {
     });
 
     // Load diagram
-    this.bpmnModeler.createDiagram();
+    await this.bpmnModeler.createDiagram();
     // Fit diagram to viewport
     this.bpmnModeler.get('canvas').zoom('fit-viewport');
   }
@@ -136,11 +136,11 @@ class Bpmn extends Component {
    * Save diagram as XML
    */
   saveDiagram = async () => {
-      const result = await this.bpmnModeler.saveXML({ format: true });
-      const { xml } = result
+    const result = await this.bpmnModeler.saveXML({ format: true });
+    const { xml } = result
 
-      let blob = new Blob([xml], { type: 'text/xml' });
-      FileSaver.saveAs(blob, 'diagram.bpmn');
+    let blob = new Blob([xml], { type: 'text/xml' });
+    FileSaver.saveAs(blob, 'diagram.bpmn');
   }
 
   /**
@@ -163,9 +163,12 @@ class Bpmn extends Component {
     const result = await this.bpmnModeler.saveXML({ format: true });
     const { xml } = result;
 
-    axios.post('http://localhost:8080/loanGrantService', {xml})
-      .then(response => response.json())
-      .then(data => console.log(data))
+    axios.post('http://localhost:8080/deployProcessDefinition', { bpmnXml: xml }, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => console.log(res))
       .catch((error) => {
         console.error('Error:', error);
       });
