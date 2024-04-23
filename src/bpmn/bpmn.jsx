@@ -188,7 +188,7 @@ class Bpmn extends Component {
             className="canvas-toolbox-button"
             onClick={this.saveDiagram}
           >
-            Download as BPMN 2.0 file
+            Download as BPMN file
           </button>
           <button
             className="canvas-toolbox-button"
@@ -200,7 +200,7 @@ class Bpmn extends Component {
             className="canvas-toolbox-button"
             onClick={this.submitDiagramToCamunda}
           >
-            Submit to Camunda
+            Deploy
           </button>
         </div>
       </div>
