@@ -178,6 +178,34 @@ class Bpmn extends Component {
       });
   }
 
+
+  /**
+   * Handle file change
+   *
+   * @param event event
+   */
+  handleFileChange = (event) => {
+    const bpmnFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsText(bpmnFile);
+
+    // readAsText 执行完会自动执行 onload 方法
+    reader.onload = (event) => {
+      const xml = event.target.result;
+      console.log(xml)
+
+      this.bpmnModeler.importXML(xml)
+        .then(result => {
+          const { warnings } = result;
+          console.log("BPMN diagram loaded successfully!", warnings);
+        })
+        .catch((err) => {
+          const { warnings, message } = err;
+          console.log("Something went wrong:", warnings, message);
+        });
+    };
+  }
+
   render() {
     return (
       <div id="App">
@@ -188,19 +216,38 @@ class Bpmn extends Component {
             className="canvas-toolbox-button"
             onClick={this.saveDiagram}
           >
-            Download as BPMN file
+            导出为 BPMN 文件
           </button>
           <button
             className="canvas-toolbox-button"
             onClick={this.saveSVG}
           >
-            Download as SVG image
+            导出为 SVG 图像
+          </button>
+
+          <input
+            type="file"
+            id="bpmnFile"
+            style={{ display: 'none' }}
+            onChange={this.handleFileChange}
+          />
+          <button
+            className="canvas-toolbox-button"
+            onClick={() => document.getElementById('bpmnFile').click()}
+          >
+            导入
+          </button>
+          <button
+            className="canvas-toolbox-button"
+            onClick={() => this.bpmnModeler.createDiagram()}
+          >
+            新建
           </button>
           <button
             className="canvas-toolbox-button"
             onClick={this.submitDiagramToCamunda}
           >
-            Deploy
+            部署
           </button>
         </div>
       </div>
