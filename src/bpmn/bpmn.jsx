@@ -168,9 +168,13 @@ class Bpmn extends Component {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res);
+        alert('Diagram submitted to Camunda successfully');
+      })
       .catch((error) => {
         console.error('Error:', error);
+        alert('Failed to submit diagram to Camunda')
       });
   }
 
