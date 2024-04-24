@@ -170,11 +170,15 @@ class Bpmn extends Component {
     })
       .then(res => {
         console.log(res);
-        alert('Diagram submitted to Camunda successfully');
+        if (res.data.startsWith('Process deployed successfully')) {
+          alert('部署成功!');
+          return;
+        }
+        alert('部署失败!');
       })
       .catch((error) => {
         console.error('Error:', error);
-        alert('Failed to submit diagram to Camunda')
+        alert('部署失败!')
       });
   }
 
@@ -192,7 +196,6 @@ class Bpmn extends Component {
     // readAsText 执行完会自动执行 onload 方法
     reader.onload = (event) => {
       const xml = event.target.result;
-      console.log(xml)
 
       this.bpmnModeler.importXML(xml)
         .then(result => {
