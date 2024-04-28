@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useCallback, useEffect } from "react";
 import "./bmpn.css";
 import FileSaver from 'file-saver';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import BpmnModeler from "bpmn-js/lib/Modeler";
 import customTranslate from "./translation/custom-translate";
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 
-// 左侧工具栏和画板图像
+// Palette and Diagram
 import 'bpmn-js/dist/assets/bpmn-js.css';
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
@@ -16,30 +16,25 @@ import "bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 import "bpmn-js-color-picker/colors/color-picker.css";
 
-// 右侧属性面板
+// Properties panel
 import {
   BpmnPropertiesPanelModule,
   BpmnPropertiesProviderModule,
   CamundaPlatformPropertiesProviderModule
 } from 'bpmn-js-properties-panel';
 import '@bpmn-io/properties-panel/assets/properties-panel.css';
-import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda.json'
+import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda.json';
 
-class Bpmn extends Component {
-  constructor(props) {
-    super(props);
-    this.bpmnModeler = null;
-  }
+// other
 
-  componentDidMount() {
-    this.initModeler();
-    this.handleBgDrag();
-  }
+
+const Bpmn = () => {
+  let bpmnModeler = null;
 
   /**
    * Initialize bpmn modeler
    */
-  initModeler = async () => {
+  const initModeler = useCallback(() => {
     // Our custom translation module
     // We need to use the array syntax that is used by bpmn-js internally
     // 'value' tells bmpn-js to use the function instead of trying to instanciate it
@@ -47,7 +42,7 @@ class Bpmn extends Component {
       translate: ['value', customTranslate]
     };
 
-    this.bpmnModeler = new BpmnModeler({
+    bpmnModeler = new BpmnModeler({
       container: "#canvas",
       height: "100vh",
       propertiesPanel: {
@@ -66,15 +61,16 @@ class Bpmn extends Component {
     });
 
     // Load diagram
-    await this.bpmnModeler.createDiagram();
-    // Fit diagram to viewport
-    this.bpmnModeler.get('canvas').zoom('fit-viewport');
-  }
+    bpmnModeler.createDiagram().then(() => {
+      // Fit diagram to viewport
+      bpmnModeler.get('canvas').zoom('fit-viewport')
+    });
+  }, [])
 
   /**
    * Handle background drag
    */
-  handleBgDrag = () => {
+  const handleBgDrag = useCallback(() => {
     const canvas = document.querySelector("#canvas");
 
     // 以下代码块为触控板或滚轮移动时的背景图像移动
@@ -124,19 +120,24 @@ class Bpmn extends Component {
         lastMousePosition.y = e.clientY;
       });
 
-      this.bpmnModeler.on("hand.move.move", function () {
+      bpmnModeler.on("hand.move.move", function () {
         const x = (lastMousePosition.x / canvas.offsetWidth) * 100;
         const y = (lastMousePosition.y / canvas.offsetHeight) * 100;
         canvas.style.backgroundPosition = `${x}% ${y}%`;
       });
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    initModeler();
+    handleBgDrag();
+  }, [initModeler, handleBgDrag]);
 
   /**
    * Save diagram as XML
    */
-  saveDiagram = async () => {
-    const result = await this.bpmnModeler.saveXML({ format: true });
+  const saveDiagram = async () => {
+    const result = await bpmnModeler.saveXML({ format: true });
     const { xml } = result
 
     let blob = new Blob([xml], { type: 'text/xml' });
@@ -146,8 +147,8 @@ class Bpmn extends Component {
   /**
    * Save diagram as SVG
    */
-  saveSVG = async () => {
-    const result = await this.bpmnModeler.saveSVG({ format: true });
+  const saveSVG = async () => {
+    const result = await bpmnModeler.saveSVG({ format: true });
     const { svg } = result
 
     let blob = new Blob([svg], { type: 'image/svg+xml' });
@@ -159,8 +160,8 @@ class Bpmn extends Component {
    *
    * @returns {Promise<void>}
    */
-  submitDiagramToCamunda = async () => {
-    const result = await this.bpmnModeler.saveXML({ format: true });
+  const submitDiagramToCamunda = async () => {
+    const result = await bpmnModeler.saveXML({ format: true });
     const { xml } = result;
 
     axios.post('http://localhost:8080/deployProcessDefinition', { bpmnXml: xml }, {
@@ -182,13 +183,12 @@ class Bpmn extends Component {
       });
   }
 
-
   /**
    * Handle file change
    *
    * @param event event
    */
-  handleFileChange = (event) => {
+  const handleFileChange = (event) => {
     const bpmnFile = event.target.files[0];
     const reader = new FileReader();
     reader.readAsText(bpmnFile);
@@ -197,7 +197,7 @@ class Bpmn extends Component {
     reader.onload = (event) => {
       const xml = event.target.result;
 
-      this.bpmnModeler.importXML(xml)
+      bpmnModeler.importXML(xml)
         .then(result => {
           const { warnings } = result;
           console.log("BPMN diagram loaded successfully!", warnings);
@@ -209,53 +209,51 @@ class Bpmn extends Component {
     };
   }
 
-  render() {
-    return (
-      <div id="App">
-        <div id="canvas"></div>
-        <div id="properties-panel"></div>
-        <div id="canvas-toolbox">
-          <button
-            className="canvas-toolbox-button"
-            onClick={this.saveDiagram}
-          >
-            导出为 BPMN 文件
-          </button>
-          <button
-            className="canvas-toolbox-button"
-            onClick={this.saveSVG}
-          >
-            导出为 SVG 图像
-          </button>
+  return (
+    <div id="App">
+      <div id="canvas"></div>
+      <div id="properties-panel"></div>
+      <div id="canvas-toolbox">
+        <button
+          className="canvas-toolbox-button"
+          onClick={saveDiagram}
+        >
+          导出为 BPMN 文件
+        </button>
+        <button
+          className="canvas-toolbox-button"
+          onClick={saveSVG}
+        >
+          导出为 SVG 图像
+        </button>
 
-          <input
-            type="file"
-            id="bpmnFile"
-            style={{ display: 'none' }}
-            onChange={this.handleFileChange}
-          />
-          <button
-            className="canvas-toolbox-button"
-            onClick={() => document.getElementById('bpmnFile').click()}
-          >
-            导入
-          </button>
-          <button
-            className="canvas-toolbox-button"
-            onClick={() => this.bpmnModeler.createDiagram()}
-          >
-            新建
-          </button>
-          <button
-            className="canvas-toolbox-button"
-            onClick={this.submitDiagramToCamunda}
-          >
-            部署
-          </button>
-        </div>
+        <input
+          type="file"
+          id="bpmnFile"
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+        />
+        <button
+          className="canvas-toolbox-button"
+          onClick={() => document.getElementById('bpmnFile').click()}
+        >
+          导入
+        </button>
+        <button
+          className="canvas-toolbox-button"
+          onClick={() => bpmnModeler.createDiagram()}
+        >
+          新建
+        </button>
+        <button
+          className="canvas-toolbox-button"
+          onClick={submitDiagramToCamunda}
+        >
+          部署
+        </button>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Bpmn;
