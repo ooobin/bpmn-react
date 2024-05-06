@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import "./bmpn.css";
 import FileSaver from 'file-saver';
 import axios from 'axios';
@@ -31,10 +31,23 @@ import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda.json';
 const Bpmn = () => {
   let bpmnModeler = null;
 
+  useEffect(() => {
+    initModeler();
+    handleBgDrag();
+
+    // 返回一个清理函数
+    return () => {
+      if (bpmnModeler) {
+        // 销毁 dmnModeler 的实例
+        bpmnModeler.destroy();
+      }
+    };
+  }, []);
+
   /**
    * Initialize bpmn modeler
    */
-  const initModeler = useCallback(() => {
+  const initModeler = () => {
     // Our custom translation module
     // We need to use the array syntax that is used by bpmn-js internally
     // 'value' tells bmpn-js to use the function instead of trying to instanciate it
@@ -65,12 +78,12 @@ const Bpmn = () => {
       // Fit diagram to viewport
       bpmnModeler.get('canvas').zoom('fit-viewport')
     });
-  }, [])
+  };
 
   /**
    * Handle background drag
    */
-  const handleBgDrag = useCallback(() => {
+  const handleBgDrag = () => {
     const canvas = document.querySelector("#canvas");
 
     // 以下代码块为触控板或滚轮移动时的背景图像移动
@@ -126,12 +139,7 @@ const Bpmn = () => {
         canvas.style.backgroundPosition = `${x}% ${y}%`;
       });
     }
-  }, []);
-
-  useEffect(() => {
-    initModeler();
-    handleBgDrag();
-  }, [initModeler, handleBgDrag]);
+  };
 
   /**
    * Save diagram as XML
