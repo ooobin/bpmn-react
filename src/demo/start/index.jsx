@@ -3,11 +3,14 @@ import http from '../../base/http';
 
 const Index = () => {
   const [data, setData] = useState([]);
+  const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [guarantor, setGuarantor] = useState('');
   const [options, setOptions] = useState('');
 
   useEffect(() => {
+    document.title = "启动流程";
+
     // 获取所有流程
     http.get('/get-processes')
       .then(res => {
@@ -19,7 +22,9 @@ const Index = () => {
   }, []);
 
   const handleInputChange = (event) => {
-    if (event.target.name === 'amount') {
+    if (event.target.name === 'name') {
+      setName(event.target.value);
+    } else if (event.target.name === 'amount') {
       setAmount(event.target.value);
     } else if (event.target.name === 'guarantor') {
       setGuarantor(event.target.value);
@@ -35,6 +40,7 @@ const Index = () => {
     // 启动流程
     http.post('/start-process', {
       processDefinitionKey: options,
+      name: name,
       amount: amount,
       guarantor: guarantor,
     }, {
@@ -67,6 +73,13 @@ const Index = () => {
             )
           })}
         </select>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleInputChange}
+          placeholder="Name"
+        />
         <input
           type="text"
           name="amount"

@@ -30,6 +30,7 @@ const Index = () => {
   let bpmnModeler = null;
 
   useEffect(() => {
+    document.title = "BPMN Modeler";
     initModeler();
     handleBgDrag();
 
