@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import "./bmpn.css";
+import "./index.css";
 import FileSaver from 'file-saver';
-import axios from 'axios';
+import http from '../base/http';
 
-// Bpmn modules
+// Index modules
 import BpmnModeler from "bpmn-js/lib/Modeler";
 import customTranslate from "./translation/custom-translate";
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
@@ -25,10 +25,8 @@ import {
 import '@bpmn-io/properties-panel/assets/properties-panel.css';
 import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda.json';
 
-// other
 
-
-const Bpmn = () => {
+const Index = () => {
   let bpmnModeler = null;
 
   useEffect(() => {
@@ -172,14 +170,14 @@ const Bpmn = () => {
     const result = await bpmnModeler.saveXML({ format: true });
     const { xml } = result;
 
-    axios.post('http://localhost:8080/deployProcessDefinition', { bpmnXml: xml }, {
+    http.post('/deployProcessDefinition', { bpmnXml: xml }, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
       .then(res => {
         console.log(res);
-        if (res.data.startsWith('Process deployed successfully')) {
+        if (res.startsWith('Process deployed successfully')) {
           alert('部署成功!');
           return;
         }
@@ -264,4 +262,4 @@ const Bpmn = () => {
   );
 }
 
-export default Bpmn;
+export default Index;

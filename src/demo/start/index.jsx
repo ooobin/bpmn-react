@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from "axios";
+import http from '../../base/http';
 
-const Demo = () => {
+const Index = () => {
   const [data, setData] = useState([]);
   const [amount, setAmount] = useState('');
   const [guarantor, setGuarantor] = useState('');
@@ -9,9 +9,12 @@ const Demo = () => {
 
   useEffect(() => {
     // 获取所有流程
-    axios.get('http://localhost:8080/get-processes')
+    http.get('/get-processes')
       .then(res => {
-        setData(res.data);
+        setData(res);
+
+        // 默认选中第一个
+        res.length > 0 && setOptions(res[0].key);
       })
   }, []);
 
@@ -30,7 +33,7 @@ const Demo = () => {
     event.preventDefault();
 
     // 启动流程
-    axios.post('http://localhost:8080/start-process', {
+    http.post('/start-process', {
       processDefinitionKey: options,
       amount: amount,
       guarantor: guarantor,
@@ -41,7 +44,7 @@ const Demo = () => {
     })
       .then(res => {
         console.log(res);
-        if (res.data.startsWith('实例启动成功')) {
+        if (res.startsWith('实例启动成功')) {
           alert('启动成功!');
           return;
         }
@@ -54,42 +57,11 @@ const Demo = () => {
       })
   }
 
-  const handleAudit = () => {
-    axios.get('http://localhost:8080/tasks')
-      .then(res => {
-        if (res.data.length === 0) {
-          alert('没有任务');
-        } else {
-          const taskId = res.data[0].id;
-          axios.post('http://localhost:8080/complete-task', {
-            taskId: taskId,
-            approve: true
-          }, {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-          })
-            .then(res => {
-              console.log(res);
-              if (res.data.startsWith('任务审核完成')) {
-                alert('审核成功!');
-                return;
-              }
-              alert('审核失败!');
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-              alert('审核失败!')
-            });
-        }
-      })
-  }
-
   return (
     <div id="App">
       <form onSubmit={handleSubmit}>
         <select name="options" onChange={handleInputChange} style={{ display: "block" }}>
-          {data.map((item, index) => {
+          {data && data.map((item, index) => {
             return (
               <option key={index} value={item.key}>{item.name}</option>
             )
@@ -110,10 +82,9 @@ const Demo = () => {
           placeholder="Guarantor"
         />
         <button type="submit">发送</button>
-        <button onClick={handleAudit}>审核</button>
       </form>
     </div>
   );
 }
 
-export default Demo;
+export default Index;

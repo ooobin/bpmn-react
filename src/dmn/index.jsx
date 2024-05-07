@@ -1,7 +1,7 @@
 import DmnModeler from 'dmn-js/lib/Modeler';
 import { useEffect } from 'react';
-import axios from 'axios';
-import '../bpmn/bmpn.css';
+import http from '../base/http';
+import '../bpmn/index.css';
 import FileSaver from 'file-saver';
 
 // style
@@ -143,14 +143,14 @@ const DmnTable = () => {
     const result = await dmnModeler.saveXML({ format: true });
     const { xml } = result;
 
-    axios.post('http://localhost:8080/deployDecisionDefinition', { dmnXml: xml }, {
+    http.post('/deployDecisionDefinition', { dmnXml: xml }, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
       .then(res => {
         console.log(res);
-        if (res.data.startsWith('Decision deployed successfully')) {
+        if (res.startsWith('Decision deployed successfully')) {
           alert('部署成功!');
           return;
         }
