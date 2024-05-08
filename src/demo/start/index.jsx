@@ -85,19 +85,22 @@ const Index = () => {
   return (
     <div id="App">
       <form onSubmit={handleSubmit}>
-        <select name="options" onChange={handleInputChange} style={{ display: "block" }}>
+        <select name="options" onChange={handleInputChange} style={{ display: "block", width: '200px' }}>
           {data && data.map((item, index) => {
             return (
               <option key={index} value={item.key}>{item.name}</option>
             )
           })}
         </select>
+        <br />
+        <br />
         <input
           type="text"
           name="name"
           value={name}
           onChange={handleInputChange}
           placeholder="Name"
+          style={{ width: '200px', height: '20px', display: 'block' }}
         />
         <input
           type="text"
@@ -105,6 +108,7 @@ const Index = () => {
           value={amount}
           onChange={handleInputChange}
           placeholder="Amount"
+          style={{ width: '200px', height: '20px', display: 'block' }}
         />
         <input
           type="text"
@@ -112,8 +116,11 @@ const Index = () => {
           value={guarantor}
           onChange={handleInputChange}
           placeholder="Guarantor"
+          style={{ width: '200px', height: '20px', display: 'block' }}
         />
-        <button type="submit">发送</button>
+        <br />
+        <br />
+        <button type="submit" style={{ width: '100px', height: '50px', display: 'block' }}>发送</button>
       </form>
     </div>
   );

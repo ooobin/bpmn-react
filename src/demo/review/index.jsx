@@ -82,7 +82,6 @@ const Index = () => {
         console.log(res);
         if (res.startsWith('任务审核完成')) {
           alert('审核成功!');
-          window.open(`/result?taskId=${taskId}`, '_blank');
           return;
         }
         alert('审核失败!');
@@ -94,7 +93,7 @@ const Index = () => {
   }
 
   return (
-    <div id="Review">
+    <div id="Review" style={{ fontSize: '20px' }}>
       <div>
         <span>任务ID: </span>
         <span>{taskId}</span>
@@ -119,8 +118,18 @@ const Index = () => {
         </label>
       </div>
       <br />
-      <button onClick={() => handleAudit(true)}>批准</button>
-      <button onClick={() => handleAudit(false)}>拒绝</button>
+      <button
+        onClick={() => handleAudit(true)}
+        style={{ width: '100px', height: '50px' }}
+      >
+        批准
+      </button>
+      <button
+        onClick={() => handleAudit(false)}
+        style={{ width: '100px', height: '50px' }}
+      >
+        拒绝
+      </button>
     </div>
   )
 }

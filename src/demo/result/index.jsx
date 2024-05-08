@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import http from "../../base/http";
 
 /**
@@ -10,8 +9,19 @@ import http from "../../base/http";
  */
 const Index = () => {
   const [result, setResult] = useState({});
-  const [searchParams] = useSearchParams();
-  const taskId = searchParams.get('taskId');
+  const [taskId, setTaskId] = useState('');
+
+  useEffect(() => {
+    http.get('/tasks')
+      .then(res => {
+        if (res.length === 0) {
+          // alert('没有任务');
+        } else {
+          const newTaskId = res[0].id;
+          setTaskId(newTaskId);
+        }
+      })
+  })
 
   useEffect(() => {
     document.title = "结果";
@@ -47,6 +57,7 @@ const Index = () => {
     })
       .then(res => {
         console.log(res);
+        alert("操作成功, 流程结束!");
       })
       .catch(error => {
         console.log(error)
@@ -54,14 +65,15 @@ const Index = () => {
   }
 
   return (
-    <div>
+    <div style={{ fontSize: '20px' }}>
       <h1>结果</h1>
       <div>金额: {result.amount}</div>
       <div>批准: {result.approve ? '是' : '否'}</div>
       <div>最终金额: {result.finalAmount}</div>
       <div>担保人: {result.guarantor}</div>
       <div>名字: {result.name}</div>
-      <button onClick={handleConfirm}>确认</button>
+      <br />
+      <button onClick={handleConfirm} style={{ width: '100px', height: '50px' }}>确认</button>
     </div>
   )
 }
