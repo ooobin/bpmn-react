@@ -3,23 +3,23 @@ import { useEffect, useState } from "react";
 
 const Index = () => {
   const [taskId, setTaskId] = useState('');
-  const [amount, setAmount] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(0);
   const [data, setData] = useState([]);
-
   useEffect(() => {
     document.title = "审核流程";
 
-    // 获取所有任务
-    http.get('/tasks')
-      .then(res => {
-        if (res.length === 0) {
-          alert('没有任务');
-        } else {
-          setTaskId(res[0].id);
+    // 定义获取任务的函数
+    const fetchTasks = () => {
+      http.get('/tasks')
+        .then(res => {
+          if (res.length === 0) {
+            // alert('没有任务');
+          } else {
+            const newTaskId = res[0].id;
+            setTaskId(newTaskId);
 
-          if (taskId) {
             // 根据任务id获取变量
-            http.post('/getVariesByTaskId', { taskId: taskId }, {
+            http.post('/getVariesByTaskId', { taskId: newTaskId }, {
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
               }
@@ -31,12 +31,21 @@ const Index = () => {
                 console.error('Error:', error);
               });
           }
-        }
-      })
-  }, [taskId])
+        })
+    };
+
+    // 立即执行一次
+    fetchTasks();
+
+    // 每2秒执行一次
+    const intervalId = setInterval(fetchTasks, 2000);
+
+    // 组件卸载时清除定时器
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleInputChange = (event) => {
-    setAmount(event.target.value);
+    setFinalAmount(event.target.value);
   }
 
   /**
@@ -51,7 +60,7 @@ const Index = () => {
     http.post('/complete-task', {
       taskId: taskId,
       approve,
-      finalAmount: amount
+      finalAmount: finalAmount
     }, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -61,6 +70,7 @@ const Index = () => {
         console.log(res);
         if (res.startsWith('任务审核完成')) {
           alert('审核成功!');
+          window.open(`/result?taskId=${taskId}`, '_blank');
           return;
         }
         alert('审核失败!');
@@ -89,8 +99,8 @@ const Index = () => {
           放款金额:
           <input
             type="text"
-            name="amount"
-            value={amount}
+            name="finalAmount"
+            value={finalAmount}
             onChange={handleInputChange}
             placeholder="放款金额"
           />

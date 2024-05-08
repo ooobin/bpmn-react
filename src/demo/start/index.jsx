@@ -61,6 +61,9 @@ const Index = () => {
         alert('启动失败!')
 
       })
+
+    // 设置随机数刷新页面使用
+    localStorage.setItem("random", Math.random().toString());
   }
 
   return (
