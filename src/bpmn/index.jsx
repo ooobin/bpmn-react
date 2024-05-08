@@ -214,6 +214,9 @@ const Index = () => {
           console.log("Something went wrong:", warnings, message);
         });
     };
+
+    // Reset the value of the file input to ensure onChange is triggered even when the same file is selected
+    event.target.value = null;
   }
 
   return (
