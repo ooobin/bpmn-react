@@ -36,6 +36,9 @@ const Index = () => {
       });
   }, [])
 
+  /**
+   * Confirm button click event
+   */
   const handleConfirm = () => {
     http.post('http://192.168.9.16:8888/completeExternalTask', { taskId }, {
       headers: {
