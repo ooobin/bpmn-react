@@ -1,10 +1,17 @@
 import http from "../../base/http";
 import { useEffect, useState } from "react";
 
+/**
+ * 审核流程
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Index = () => {
   const [taskId, setTaskId] = useState('');
   const [finalAmount, setFinalAmount] = useState(0);
   const [data, setData] = useState([]);
+
   useEffect(() => {
     document.title = "审核流程";
 
@@ -44,6 +51,11 @@ const Index = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  /**
+   * 输入框变化
+   *
+   * @param event event
+   */
   const handleInputChange = (event) => {
     setFinalAmount(event.target.value);
   }

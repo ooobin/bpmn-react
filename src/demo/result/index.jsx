@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import http from "../../base/http";
 
+/**
+ * 结果
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Index = () => {
   const [result, setResult] = useState({});
   const [searchParams] = useSearchParams();

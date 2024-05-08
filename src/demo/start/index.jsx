@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import http from '../../base/http';
 
+/**
+ * 启动流程
+ *
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const Index = () => {
   const [data, setData] = useState([]);
   const [name, setName] = useState('');
@@ -21,6 +27,11 @@ const Index = () => {
       })
   }, []);
 
+  /**
+   * 输入框变化
+   *
+   * @param event event
+   */
   const handleInputChange = (event) => {
     if (event.target.name === 'name') {
       setName(event.target.value);
@@ -33,6 +44,11 @@ const Index = () => {
     }
   }
 
+  /**
+   * 表单发送
+   *
+   * @param event event
+   */
   const handleSubmit = (event) => {
     // 阻止表单默认提交行为
     event.preventDefault();
