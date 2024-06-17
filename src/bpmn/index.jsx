@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import "./index.css";
 import FileSaver from 'file-saver';
-import http from '../base/http';
 
 // Index modules
 import BpmnModeler from "bpmn-js/lib/Modeler";
@@ -171,14 +170,13 @@ const Index = () => {
     const result = await bpmnModeler.saveXML({ format: true });
     const { xml } = result;
 
-    http.post('/deployProcessDefinition', { bpmnXml: xml }, {
+    axios.post('/deployProcessDefinition', { bpmnXml: xml }, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
       .then(res => {
-        console.log(res);
-        if (res.startsWith('Process deployed successfully')) {
+        if (res.data.startsWith('Process deployed successfully')) {
           alert('部署成功!');
           return;
         }

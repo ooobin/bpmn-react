@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import BpmnViewer from 'bpmn-js';
-import http from '../../base/http';
 import axios from "axios";
 import './bpmn-diagram.css';
 
@@ -9,6 +8,7 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
     const [viewer, setViewer] = useState(null);
 
     useEffect(() => {
+        document.title = "流程跟踪";
         initializeBpmnViewer();
     }, []);
 
@@ -26,9 +26,9 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
 
             setViewer(viewerInstance);
 
-            http.get(diagramUrl)
+            axios.get(diagramUrl)
                 .then(res => {
-                    viewerInstance.importXML(res).then(() => {
+                    viewerInstance.importXML(res.data).then(() => {
                         viewerInstance.get('canvas').zoom('fit-viewport');
                     }).catch(function (err) {
                         const {warnings, message} = err;
@@ -41,6 +41,7 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
     const highlightCurrentTask = () => {
         axios.get(`/engine-rest/process-instance/${processInstanceId}/activity-instances`)
             .then(response => {
+                console.log(response.data.childActivityInstances)
                 const activities = response.data.childActivityInstances;
                 const canvas = viewer.get('canvas');
                 activities.forEach(activity => {

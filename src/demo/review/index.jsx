@@ -1,4 +1,3 @@
-import http from "../../base/http";
 import { useEffect, useState } from "react";
 
 /**
@@ -17,7 +16,7 @@ const Index = () => {
 
     // 定义获取任务的函数
     const fetchTasks = () => {
-      http.get('/tasks')
+      axios.get('/tasks')
         .then(res => {
           if (res.length === 0) {
             // alert('没有任务');
@@ -26,13 +25,13 @@ const Index = () => {
             setTaskId(newTaskId);
 
             // 根据任务id获取变量
-            http.post('/getVariesByTaskId', { taskId: newTaskId }, {
+            axios.post('/getVariesByTaskId', { taskId: newTaskId }, {
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
               }
             })
               .then(res => {
-                setData(res)
+                setData(res.data)
               })
               .catch((error) => {
                 console.error('Error:', error);
@@ -69,7 +68,7 @@ const Index = () => {
       return;
     }
 
-    http.post('/complete-task', {
+    axios.post('/complete-task', {
       taskId: taskId,
       approve,
       finalAmount: finalAmount
@@ -80,7 +79,7 @@ const Index = () => {
     })
       .then(res => {
         console.log(res);
-        if (res.startsWith('任务审核完成')) {
+        if (res.data.startsWith('任务审核完成')) {
           alert('审核成功!');
           return;
         }

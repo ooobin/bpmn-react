@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import http from "../../base/http";
 
 /**
  * 结果
@@ -12,9 +11,9 @@ const Index = () => {
   const [taskId, setTaskId] = useState('');
 
   useEffect(() => {
-    http.get('/tasks')
+    axios.get('/tasks')
       .then(res => {
-        if (res.length === 0) {
+        if (res.data.length === 0) {
           // alert('没有任务');
         } else {
           const newTaskId = res[0].id;
@@ -26,7 +25,7 @@ const Index = () => {
   useEffect(() => {
     document.title = "结果";
 
-    http.post('http://192.168.9.16:8888/getFinalVariables', {}, {
+    axios.post('http://192.168.9.16:8888/getFinalVariables', {}, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }
@@ -34,11 +33,11 @@ const Index = () => {
       .then(res => {
         console.log(res)
         setResult({
-          amount: res.amount.value,
-          approve: res.approve.value,
-          finalAmount: res.finalAmount.value,
-          guarantor: res.guarantor.value,
-          name: res.name.value
+          amount: res.data.amount.value,
+          approve: res.data.approve.value,
+          finalAmount: res.data.finalAmount.value,
+          guarantor: res.data.guarantor.value,
+          name: res.data.name.value
         })
       })
       .catch((error) => {
@@ -50,7 +49,7 @@ const Index = () => {
    * Confirm button click event
    */
   const handleConfirm = () => {
-    http.post('http://192.168.9.16:8888/completeExternalTask', { taskId }, {
+    axios.post('http://192.168.9.16:8888/completeExternalTask', { taskId }, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       }

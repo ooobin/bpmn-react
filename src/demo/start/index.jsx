@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import http from '../../base/http';
 
 /**
  * 启动流程
@@ -18,9 +17,9 @@ const Index = () => {
     document.title = "启动流程";
 
     // 获取所有流程
-    http.get('/get-processes')
+    axios.get('/get-processes')
       .then(res => {
-        setData(res);
+        setData(res.data);
 
         // 默认选中第一个
         res.length > 0 && setOptions(res[0].key);
@@ -54,7 +53,7 @@ const Index = () => {
     event.preventDefault();
 
     // 启动流程
-    http.post('/start-process', {
+    axios.post('/start-process', {
       processDefinitionKey: options,
       name: name,
       amount: amount,
@@ -65,8 +64,7 @@ const Index = () => {
       }
     })
       .then(res => {
-        console.log(res);
-        if (res.startsWith('实例启动成功')) {
+        if (res.data.startsWith('实例启动成功')) {
           alert('启动成功!');
           return;
         }
