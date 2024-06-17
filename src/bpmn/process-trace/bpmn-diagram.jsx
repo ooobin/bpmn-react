@@ -18,7 +18,7 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
         }
     }, [viewer]);
 
-    const initializeBpmnViewer = async () => {
+    const initializeBpmnViewer = () => {
         if (canvasRef.current) {
             const viewerInstance = new BpmnViewer({
                 container: canvasRef.current
@@ -28,9 +28,7 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
 
             http.get(diagramUrl)
                 .then(res => {
-                    viewerInstance.importXML(res).then(function (result) {
-                        const {warnings} = result;
-                        console.log('success !', warnings);
+                    viewerInstance.importXML(res).then((result) => {
                         viewerInstance.get('canvas').zoom('fit-viewport');
                     }).catch(function (err) {
                         const {warnings, message} = err;
@@ -44,7 +42,6 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
         axios.get(`/engine-rest/process-instance/${processInstanceId}/activity-instances`)
             .then(response => {
                 const activities = response.data.childActivityInstances;
-                console.log(activities)
                 const canvas = viewer.get('canvas');
                 activities.forEach(activity => {
                     canvas.addMarker(activity.activityId, 'highlight');
