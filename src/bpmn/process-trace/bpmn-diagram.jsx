@@ -28,7 +28,7 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
 
             http.get(diagramUrl)
                 .then(res => {
-                    viewerInstance.importXML(res).then((result) => {
+                    viewerInstance.importXML(res).then(() => {
                         viewerInstance.get('canvas').zoom('fit-viewport');
                     }).catch(function (err) {
                         const {warnings, message} = err;
