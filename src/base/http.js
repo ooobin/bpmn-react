@@ -2,7 +2,8 @@ import axios from "axios";
 
 // 自定义实例
 const http = axios.create({
-  baseURL: 'http://192.168.9.16:8081',
+  // baseURL: 'http://192.168.9.16:8081',
+  baseURL: 'http://localhost:8080',
   timeout: 5 * 1000
 });
 
