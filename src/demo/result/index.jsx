@@ -17,7 +17,7 @@ const Index = () => {
         if (res.data.length === 0) {
           // alert('没有任务');
         } else {
-          const newTaskId = res[0].id;
+          const newTaskId = res.data[0].id;
           setTaskId(newTaskId);
         }
       })

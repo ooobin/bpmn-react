@@ -22,7 +22,7 @@ const Index = () => {
           if (res.length === 0) {
             // alert('没有任务');
           } else {
-            const newTaskId = res[0].id;
+            const newTaskId = res.data[0].id;
             setTaskId(newTaskId);
 
             // 根据任务id获取变量
@@ -43,12 +43,6 @@ const Index = () => {
 
     // 立即执行一次
     fetchTasks();
-
-    // 每2秒执行一次
-    const intervalId = setInterval(fetchTasks, 2000);
-
-    // 组件卸载时清除定时器
-    return () => clearInterval(intervalId);
   }, []);
 
   /**
