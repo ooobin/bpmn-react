@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bpmn-io/form-js-editor": "1.9.0",
     "@bpmn-io/properties-panel": "3.18.2",
     "@craco/craco": "7.1.0",
     "axios": "1.6.8",
@@ -20,7 +21,7 @@
   },
   "scripts": {
     "start": "PORT=15524 craco start",
-    "build": "PORT=15524 craco build"
+    "build": "craco build"
   },
   "proxy": "http://localhost:8080",
   "eslintConfig": {

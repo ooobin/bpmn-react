@@ -5,7 +5,7 @@ import axios from "axios";
 
 // Index modules
 import BpmnModeler from "bpmn-js/lib/Modeler";
-import customTranslate from "./translation/custom-translate";
+import CustomTranslate from "./translation/custom-translate";
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 
 // Palette and Diagram
@@ -43,15 +43,9 @@ const Index = () => {
     };
   }, []);
 
-  /**
-   * Initialize bpmn modeler
-   */
   const initModeler = () => {
-    // Our custom translation module
-    // We need to use the array syntax that is used by bpmn-js internally
-    // 'value' tells bmpn-js to use the function instead of trying to instanciate it
     const customTranslateModule = {
-      translate: ['value', customTranslate]
+      translate: ['value', CustomTranslate]
     };
 
     bpmnModeler = new BpmnModeler({
@@ -72,16 +66,12 @@ const Index = () => {
       }
     });
 
-    // Load diagram
     bpmnModeler.createDiagram().then(() => {
       // Fit diagram to viewport
       bpmnModeler.get('canvas').zoom('fit-viewport')
     });
   };
 
-  /**
-   * Handle background drag
-   */
   const handleBgDrag = () => {
     const canvas = document.querySelector("#canvas");
 
@@ -140,9 +130,6 @@ const Index = () => {
     }
   };
 
-  /**
-   * Save diagram as XML
-   */
   const saveDiagram = async () => {
     const result = await bpmnModeler.saveXML({ format: true });
     const { xml } = result
@@ -151,9 +138,6 @@ const Index = () => {
     FileSaver.saveAs(blob, 'diagram.bpmn');
   }
 
-  /**
-   * Save diagram as SVG
-   */
   const saveSVG = async () => {
     const result = await bpmnModeler.saveSVG({ format: true });
     const { svg } = result
@@ -162,11 +146,6 @@ const Index = () => {
     FileSaver.saveAs(blob, 'diagram.svg');
   }
 
-  /**
-   * Submit diagram to Camunda
-   *
-   * @returns {Promise<void>}
-   */
   const submitDiagramToCamunda = async () => {
     const result = await bpmnModeler.saveXML({ format: true });
     const { xml } = result;
@@ -189,11 +168,6 @@ const Index = () => {
       });
   }
 
-  /**
-   * Handle file change
-   *
-   * @param event event
-   */
   const handleFileChange = (event) => {
     const bpmnFile = event.target.files[0];
     const reader = new FileReader();

@@ -9,6 +9,7 @@ const BpmnDiagram = ({diagramUrl, processInstanceId}) => {
 
     useEffect(() => {
         document.title = "流程跟踪";
+
         initializeBpmnViewer();
     }, []);
 
