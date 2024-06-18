@@ -1,4 +1,4 @@
-#App {
+.bpmn-js {
     display: flex;
     position: relative;
 
@@ -17,7 +17,7 @@
         background-color: white;
     }
 
-    #canvas-toolbox {
+    .canvas-toolbox {
         position: absolute;
         bottom: 1vh;
         left: 1vw;

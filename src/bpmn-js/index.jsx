@@ -193,10 +193,10 @@ const Index = () => {
   }
 
   return (
-    <div id="App">
+    <div className="bpmn-js">
       <div id="canvas"></div>
       <div id="properties-panel"></div>
-      <div id="canvas-toolbox">
+      <div className="canvas-toolbox">
         <button
           className="canvas-toolbox-button"
           onClick={saveDiagram}
