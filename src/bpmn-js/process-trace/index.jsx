@@ -1,14 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import BpmnDiagram from './bpmn-diagram';
+import axios from "axios";
 
 const App = () => {
+
+    const [definitionId, setDefinitionId] = useState('');
+    const [processInstanceId, setProcessInstanceId] = useState('');
+
+    useEffect(() => {
+        getProcessInstanceId();
+    })
+
+    const getProcessDefinitionXml = () => {
+    }
+
+    const getProcessInstanceId = () => {
+        axios.get('/engine-rest/process-instance')
+            .then(response => {
+                console.log(response.data);
+                setDefinitionId(response.data[0].definitionId);
+                setProcessInstanceId(response.data[0].id);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
     return (
         <div>
             <h1>BPMN Diagram</h1>
-            <BpmnDiagram
-                diagramUrl='http://localhost:8080/getProcessDefinitionXml?processDefinitionId=Process_loan:1:06417262-2bb2-11ef-8fc6-8efe7450640f'
-                processInstanceId="2a66d593-2bb2-11ef-8fc6-8efe7450640f"
-            />
+            {
+                definitionId && <BpmnDiagram
+                    diagramUrl={'http://localhost:8080/getProcessDefinitionXml?processDefinitionId=' + definitionId}
+                    processInstanceId={processInstanceId}
+                />
+            }
         </div>
     );
 };

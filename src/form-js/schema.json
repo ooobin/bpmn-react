@@ -2,8 +2,7 @@
   "components": [
     {
       "text": "# File an Invoice\n\nAdd your invoice details below.",
-      "type": "text",
-      "id": "Field_1w0c57m"
+      "type": "text"
     },
     {
       "key": "creditor",
@@ -11,8 +10,7 @@
       "type": "textfield",
       "validate": {
         "required": true
-      },
-      "id": "Field_08eyp24"
+      }
     },
     {
       "description": "An invoice number in the format: C-123.",
@@ -21,22 +19,14 @@
       "type": "textfield",
       "validate": {
         "pattern": "^C-[0-9]+$"
-      },
-      "id": "Field_1jw8bcn"
+      }
     },
     {
       "action": "submit",
       "key": "submit",
       "label": "Submit",
-      "type": "button",
-      "id": "Field_1wugm0e"
+      "type": "button"
     }
   ],
-  "schemaVersion": 16,
-  "exporter": {
-    "name": "form-js (https://demo.bpmn.io)",
-    "version": "1.8.3"
-  },
-  "type": "default",
-  "id": "Form_1lwhayp"
+  "type": "default"
 }

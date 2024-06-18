@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./bpmn-js";
 import Tracer from "./bpmn-js/process-trace";
 import Form from "./form-js";
+import FormViewer from "./form-js/viewer";
 import Start from "./demo/start";
 import Review from "./demo/review";
 import Result from "./demo/result";
@@ -17,6 +18,7 @@ const Router = () => {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/form" element={<Form />} />
+          <Route path="/form-viewer" element={<FormViewer />} />
           <Route path="/tracer" element={<Tracer />} />
           <Route path="/demo" element={<Start />} />
           <Route path="/review" element={<Review />} />
