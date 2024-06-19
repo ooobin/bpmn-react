@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from "axios";
+import { Form } from '@bpmn-io/form-js';
 
 const FormEditorComponent = () => {
 
     const [formsData, setFormsData] = useState([]);
+    const formRef = useRef(null);
 
     useEffect(() => {
         document.title = 'Form Viewer';
 
         getTasks();
     }, []);
+
+    useEffect(() => {
+        if (formsData.length > 0) {
+            initializeForm();
+        }
+    }, [formsData]);
 
     const getTasks = () => {
         axios.get('/engine-rest/deployment')
@@ -39,15 +47,17 @@ const FormEditorComponent = () => {
             });
     }
 
+    const initializeForm = () => {
+        const form = new Form({
+            container: formRef.current,
+        });
+
+        form.importSchema(formsData[0]);
+    }
+
     return (
         <>
-            <select name="options" style={{ display: "block", width: '200px' }}>
-                {formsData && formsData.map((item, index) => {
-                    return (
-                        <option key={index} value={item.id}>{item.id}</option>
-                    )
-                })}
-            </select>
+            <div ref={formRef}></div>
         </>
     )
 }

@@ -21,9 +21,11 @@ const Index = () => {
     axios.get('/get-processes')
       .then(res => {
         setData(res.data);
+        console.log(res.data)
+        console.log(res.data[0].key)
 
         // 默认选中第一个
-        res.length > 0 && setOptions(res[0].key);
+        res.data.length > 0 && setOptions(res.data[0].key);
       })
   }, []);
 
